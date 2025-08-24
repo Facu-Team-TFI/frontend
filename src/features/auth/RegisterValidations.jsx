@@ -2,30 +2,32 @@ import { useState, useEffect } from "react";
 import { createBuyer } from "../../services/api";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../services/auth/AuthContext";
-import { notifyMissingFields, notifySuccessAdd } from "../../pages/notification/notification";
+import {
+  notifyMissingFields,
+  notifySuccessAdd,
+} from "../../pages/notification/notification";
 
 function RegisterValidations(onRegisterSuccess) {
-
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState("");
 
   const [formData, setFormData] = useState({
-    BuyersName: '',
-    BuyersLastName: '',
-    NickName: '',
-    Email: '',
-    Phone: '',
-    RegistrationDate: '',
-    DNI: '',
-    ID_City: '',
-    Passwords: '',
-    confirmPassword: '',
+    BuyersName: "",
+    BuyersLastName: "",
+    NickName: "",
+    Email: "",
+    Phone: "",
+    RegistrationDate: "",
+    DNI: "",
+    ID_City: "",
+    Passwords: "",
+    confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   const { isAuthenticated } = useAuth();
 
@@ -33,10 +35,7 @@ function RegisterValidations(onRegisterSuccess) {
 
   useEffect(() => {
     try {
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }, [formData]);
 
   useEffect(() => {
@@ -57,7 +56,9 @@ function RegisterValidations(onRegisterSuccess) {
     const fetchCities = async () => {
       if (!selectedProvince) return;
       try {
-        const res = await fetch(`http://localhost:3000/ciudades/${selectedProvince}`);
+        const res = await fetch(
+          `http://localhost:3000/ciudades/${selectedProvince}`
+        );
         const data = await res.json();
         setCities(data);
       } catch (err) {
@@ -73,21 +74,20 @@ function RegisterValidations(onRegisterSuccess) {
 
     setFormData({
       ...formData,
-      [name]: value
-    })
-
+      [name]: value,
+    });
   };
 
   const validateBlur = (e) => {
     const { name, value } = e.target;
 
-    if (value.trim() === '') {
-      setErrors(prev => ({
+    if (value.trim() === "") {
+      setErrors((prev) => ({
         ...prev,
-        [name]: 'Este campo es obligatorio',
+        [name]: "Este campo es obligatorio",
       }));
     } else {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
         return newErrors;
@@ -95,64 +95,65 @@ function RegisterValidations(onRegisterSuccess) {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const newErrors = {};
 
-    if (formData.BuyersName.trim() === '') {
-      newErrors.BuyersName = 'El nombre es obligatorio';
+    if (formData.BuyersName.trim() === "") {
+      newErrors.BuyersName = "El nombre es obligatorio";
     }
-    if (formData.BuyersLastName.trim() === '') {
-      newErrors.BuyersLastName = 'El apellido es obligatorio';
+    if (formData.BuyersLastName.trim() === "") {
+      newErrors.BuyersLastName = "El apellido es obligatorio";
     }
-    if (formData.NickName.trim() === '') {
-      newErrors.NickName = 'Su nombre de usuario es obligatorio';
+    if (formData.NickName.trim() === "") {
+      newErrors.NickName = "Su nombre de usuario es obligatorio";
     }
-    if (formData.Email.trim() === '') {
-      newErrors.Email = 'El email es obligatorio';
+    if (formData.Email.trim() === "") {
+      newErrors.Email = "El email es obligatorio";
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.Email)) {
-        newErrors.Email = 'El email no es válido';
+        newErrors.Email = "El email no es válido";
       }
     }
-    if (formData.Phone.trim() === '') {
-      newErrors.Phone = 'El teléfono es obligatorio';
+    if (formData.Phone.trim() === "") {
+      newErrors.Phone = "El teléfono es obligatorio";
     } else {
       const phoneRegex = /^[0-9]{7,}$/;
       if (!phoneRegex.test(formData.Phone)) {
-        newErrors.Phone = 'Ingrese un teléfono válido';
+        newErrors.Phone = "Ingrese un teléfono válido";
       }
     }
-    if (formData.DNI.trim() === '') {
-      newErrors.DNI = 'El DNI es obligatorio';
+    if (formData.DNI.trim() === "") {
+      newErrors.DNI = "El DNI es obligatorio";
     } else {
       const dniRegex = /^[0-9]{7,8}$/;
       if (!dniRegex.test(formData.DNI)) {
-        newErrors.DNI = 'El DNI debe contener solo números (7-8 dígitos)';
+        newErrors.DNI = "El DNI debe contener solo números (7-8 dígitos)";
       }
     }
-    if (!selectedProvince || selectedProvince === '') {
-      newErrors.selectedProvince = 'Debe seleccionar una provincia';
+    if (!selectedProvince || selectedProvince === "") {
+      newErrors.selectedProvince = "Debe seleccionar una provincia";
     }
-    if (formData.ID_City.trim() === '') {
-      newErrors.ID_City = 'Debe seleccionar una ciudad';
+    if (formData.ID_City.trim() === "") {
+      newErrors.ID_City = "Debe seleccionar una ciudad";
     }
-    if (formData.Passwords.trim() === '') {
-      newErrors.Passwords = 'La contraseña es obligatoria';
+    if (formData.Passwords.trim() === "") {
+      newErrors.Passwords = "La contraseña es obligatoria";
     } else {
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      const passwordRegex =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
       if (!passwordRegex.test(formData.Passwords)) {
-        newErrors.Passwords = 'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números';
+        newErrors.Passwords =
+          "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas y números";
       }
     }
-    if (formData.confirmPassword.trim() === '') {
-      newErrors.confirmPassword = 'La confirmación es obligatoria';
+    if (formData.confirmPassword.trim() === "") {
+      newErrors.confirmPassword = "La confirmación es obligatoria";
     }
     if (formData.Passwords !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Las contraseñas no coinciden';
+      newErrors.confirmPassword = "Las contraseñas no coinciden";
     }
 
     setErrors(newErrors);
@@ -168,31 +169,30 @@ function RegisterValidations(onRegisterSuccess) {
 
       const response = await createBuyer(formDataToSend);
 
-      if (isAuthenticated) {
-        onRegisterSuccess();
+      // if (isAuthenticated) {
+      //   onRegisterSuccess();
 
-      }
+      // }
 
       setFormData({
-        BuyersName: '',
-        BuyersLastName: '',
-        NickName: '',
-        Email: '',
-        Phone: '',
-        RegistrationDate: '',
-        DNI: '',
-        ID_City: '',
-        Passwords: '',
-        confirmPassword: '',
+        BuyersName: "",
+        BuyersLastName: "",
+        NickName: "",
+        Email: "",
+        Phone: "",
+        RegistrationDate: "",
+        DNI: "",
+        ID_City: "",
+        Passwords: "",
+        confirmPassword: "",
       });
-      notifySuccessAdd(`¡Registro con éxito!`)
+      notifySuccessAdd(`¡Registro con éxito!`);
 
       if (!isAuthenticated) {
-        navigate('/login');
+        navigate("/login");
       }
-
     } catch (error) {
-      console.error('Error al crear usuario:', error);
+      console.error("Error al crear usuario:", error);
 
       if (error.message.includes("email") || error.message.includes("Email")) {
         setErrors((prev) => ({
