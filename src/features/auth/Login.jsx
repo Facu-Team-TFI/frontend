@@ -105,12 +105,9 @@ const Login = () => {
               <input type="checkbox" className="mr-2 rounded border-gray-300" />
               Recordar inicio de sesion
             </label>
-            <a
-              href="#"
-              className="text-sm text-[#40250D] font-medium hover:underline"
-            >
-              ¿Olvidaste tu contraseña?
-            </a>
+            <p className="text-sm text-[#40250D] font-medium hover:underline">
+              <Link to="/auth/forgot-password">¿Olvidaste tu contraseña?</Link>
+            </p>
           </div>
 
           <button
