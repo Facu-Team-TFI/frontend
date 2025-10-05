@@ -36,7 +36,7 @@ export const createPublication = async (data) => {
   return await res.json();
 };
 
-export const createBuyer = async (data) => {  
+export const createBuyer = async (data) => {
   const res = await fetch(`${API_URL}/buyers`, {
     method: "POST",
     headers: {
@@ -72,5 +72,27 @@ export const deletePublication = async (id) => {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Error al eliminar publicación");
+  return await res.json();
+};
+
+export const getAllNotifications = async (userId) => {
+  const res = await fetch(`${API_URL}/${userId}/notifications`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) throw new Error("Error al obtener notificaciones");
+  return await res.json();
+};
+
+export const deleteNotification = async (id) => {
+  const res = await fetch(`${API_URL}/notifications/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) throw new Error("Error al eliminar notificaciones");
   return await res.json();
 };
