@@ -1,9 +1,10 @@
 import { createContext, useState, useEffect } from "react";
-import { deleteNotification, getAllNotifications } from "./api";
+import { deleteNotification, getAllNotifications } from "../api";
+import { notifyMissingFields } from "../../pages/notification/notification";
+import { useAuth } from "../auth/AuthContext";
+import { NotificationsContext } from "./notifications.context";
 
-export const NotificationsContext = createContext();
-
-export const NotificationsProvider = ({ children }) => {
+export const NotificationsContextProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -26,6 +27,7 @@ export const NotificationsProvider = ({ children }) => {
     if (!userId) return;
     fetchNotifications();
 
+    //implemetar sockets
     // interval cada 10 minutos (600000 ms)
     const intervalId = setInterval(fetchNotifications, 600000);
     // limpiar interval al desmontar o cambiar userId
@@ -48,10 +50,10 @@ export const NotificationsProvider = ({ children }) => {
   };
 
   return (
-    <NotificationContext.Provider
+    <NotificationsContext
       value={{ notifications, removeNotification, loading }}
     >
       {children}
-    </NotificationContext.Provider>
+    </NotificationsContext>
   );
 };

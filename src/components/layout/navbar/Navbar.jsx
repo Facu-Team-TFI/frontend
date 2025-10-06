@@ -7,12 +7,15 @@ import SideBar from "../sideBar/SideBar";
 import SellerPolicyModal from "../../../features/sellerFeatures/DataBackPage";
 import { useAuth } from "../../../services/auth/AuthContext";
 import { useSearch } from "../../../services/auth/SearchContext";
+import { useContext } from "react";
+import { NotificationsContext } from "../../../services/notifications/notifications.context";
 
 export default function Navbar({ publications }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
   const { searchTitle, setSearchTitle } = useSearch();
-  const [searchButton, setSearchButton] = useState(false);
+  const [searchButton, setSearchButton] = useState(false); // Esta línea está duplicada, puedes eliminar una
+  const { notifications } = useContext(NotificationsContext);
 
   const navigate = useNavigate();
   const { user } = useAuth();
