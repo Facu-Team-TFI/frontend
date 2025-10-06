@@ -9,13 +9,16 @@ import { useAuth } from "../../../services/auth/AuthContext";
 import { useSearch } from "../../../services/auth/SearchContext";
 import { useContext } from "react";
 import { NotificationsContext } from "../../../services/notifications/notifications.context";
+import NotificationCard from "./NotificationCard";
 
 export default function Navbar({ publications }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
   const { searchTitle, setSearchTitle } = useSearch();
   const [searchButton, setSearchButton] = useState(false); // Esta línea está duplicada, puedes eliminar una
-  const { notifications } = useContext(NotificationsContext);
+  const { notifications, removeNotification } =
+    useContext(NotificationsContext);
+  const [viewNotifications, setViewNotifications] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -104,7 +107,10 @@ export default function Navbar({ publications }) {
             />
           </div>
 
-          <button className="text-gray-400 hover:text-white transition-colors">
+          <button
+            className="text-gray-400 hover:text-white transition-colors"
+            onClick={() => setViewNotifications(!viewNotifications)}
+          >
             <Bell className="w-5 h-5" />
           </button>
 
@@ -138,6 +144,22 @@ export default function Navbar({ publications }) {
           placeholder="Buscar..."
           className="min-[650px]:hidden w-full bg-[#60250D] text-white pl-10 pr-4 py-4 mt-3 text-sm placeholder-gray-400 focus:outline-none"
         />
+      )}
+
+      {viewNotifications && ( //agregar estilos
+        <div className="notification-container">
+          {notifications.length > 0 ? (
+            notifications.map((n) => (
+              <NotificationCard
+                key={n.id}
+                notification={n}
+                removeNotification={removeNotification}
+              />
+            ))
+          ) : (
+            <p>No tienes notificaciones pendientes.</p>
+          )}
+        </div>
       )}
 
       {/* Modal de políticas para vendedores */}
