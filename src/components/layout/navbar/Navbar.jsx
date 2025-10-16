@@ -108,7 +108,7 @@ export default function Navbar({ publications }) {
           </div>
 
           <button
-            className="text-gray-400 hover:text-white transition-colors"
+            className="relative text-gray-400 hover:text-white transition-colors"
             onClick={() => setViewNotifications(!viewNotifications)}
           >
             <Bell className="w-5 h-5" />
@@ -153,21 +153,32 @@ export default function Navbar({ publications }) {
         />
       )}
 
-      {viewNotifications && ( //agregar estilos
-        <div className="notification-container">
+      {/* Notificaciones */}
+      <div
+        className={`
+      fixed top-18 right-4 
+      w-80 max-h-[400px] overflow-y-auto 
+      bg-gray-700 bg-opacity-75 rounded-xl shadow-lg 
+      p-2 z-50 transition-all duration-300 ease-out
+    ${viewNotifications ? "top-16 opacity-100 translate-y-0" : "top-12 opacity-0 -translate-y-2 pointer-events-none"}`}
+      >
+        <div className="p-3 overflow-y-auto max-h-[400px]">
           {notifications.length > 0 ? (
             notifications.map((n) => (
               <NotificationCard
                 key={n.id}
                 notification={n}
                 removeNotification={removeNotification}
+                setViewNotifications={setViewNotifications}
               />
             ))
           ) : (
-            <p>No tienes notificaciones pendientes.</p>
+            <p className="text-center text-gray-50 text-sm py-4">
+              No tienes notificaciones pendientes.
+            </p>
           )}
         </div>
-      )}
+      </div>
 
       {/* Modal de políticas para vendedores */}
       {showPolicyModal && <SellerPolicyModal onConfirm={handleConfirmSeller} />}
