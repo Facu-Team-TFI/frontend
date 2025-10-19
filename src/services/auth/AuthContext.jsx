@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
-import { Navigate } from "react-router-dom";
 import { notifyMissingFields } from "../../pages/notification/notification";
 
 const AuthContext = createContext();
@@ -12,8 +11,6 @@ export const AuthProvider = ({ children }) => {
     const userStr = localStorage.getItem("user");
     return userStr ? JSON.parse(userStr) : null;
   });
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,7 +51,6 @@ export const AuthProvider = ({ children }) => {
     setUser(user);
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
-    setRedirectToLogin(false);
   };
 
   const logout = () => {
@@ -62,10 +58,8 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    setRedirectToLogin(true);
   };
 
-  // if (redirectToLogin) return <Navigate to="/login" replace />; Esto hay que crear un nuevo componente o envolver AuthProvider dentro de Routes
   return (
     <AuthContext.Provider
       value={{

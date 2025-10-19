@@ -11,6 +11,7 @@ import {
   ArrowLeftOnRectangleIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/solid";
+import { Bell, Boxes, Tag, Mail } from "lucide-react";
 
 import { useAuth } from "../../../services/auth/AuthContext";
 import { useNavigate } from "react-router";
@@ -43,10 +44,9 @@ const sidebarOptions = [
 
 const sidebarOptionsMobile = [
   { text: "Home", Icon: Squares2X2Icon, route: "/home" },
-  { text: "Catálogo", Icon: Squares2X2Icon, route: "/catalogo" },
-  { text: "Vender", Icon: Squares2X2Icon, route: "/registro_vendedor" },
-  { text: "Contacto", Icon: Squares2X2Icon, route: "/contacto" },
-  { text: "Notificaciones", Icon: Squares2X2Icon, route: "/" },
+  { text: "Catálogo", Icon: Boxes, route: "/catalogo" },
+  { text: "Vender", Icon: Tag, route: "/registro-vendedor" },
+  { text: "Contacto", Icon: Mail, route: "/contacto" },
   { text: "Mis Publicaciones", Icon: TagIcon, route: "/vender" },
   {
     text: "Subir Publicación",

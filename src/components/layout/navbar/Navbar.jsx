@@ -135,6 +135,19 @@ export default function Navbar({ publications }) {
         </div>
         <div className="min-[650px]:hidden flex items-center gap-5">
           <button
+            className="relative text-gray-400 hover:text-white transition-colors"
+            onClick={() => setViewNotifications(!viewNotifications)}
+          >
+            <Bell className="w-5 h-5" />
+
+            {/* Badge */}
+            {notifications.length > 0 && (
+              <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-3 px-1 text-[0.625rem] font-bold text-white bg-red-600 rounded-full border border-gray-900">
+                {notifications.length}
+              </span>
+            )}
+          </button>
+          <button
             onClick={() => {
               setSearchButton(!searchButton);
             }}
