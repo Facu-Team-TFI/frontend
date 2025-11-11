@@ -126,7 +126,9 @@ export default function Navbar({ publications }) {
             <img
               src={
                 user?.avatarUrl
-                  ? `http://localhost:3000${user?.avatarUrl}`
+                  ? user.avatarUrl.startsWith("http")
+                    ? user.avatarUrl
+                    : `http://localhost:3000/${user.avatarUrl}`
                   : avatarDefault
               }
               alt="Avatar"
