@@ -3,6 +3,9 @@ import { deleteNotification, getAllNotifications } from "../api";
 import { notifyMissingFields } from "../../pages/notification/notification";
 import { useAuth } from "../auth/AuthContext";
 import { NotificationsContext } from "./notifications.context";
+import { io } from "socket.io-client";
+
+const SOCKET_URL = "http://localhost:3000";
 
 export const NotificationsContextProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
@@ -26,12 +29,23 @@ export const NotificationsContextProvider = ({ children }) => {
   useEffect(() => {
     if (!userId) return;
     fetchNotifications();
+  }, [userId]);
 
-    //implemetar sockets
-    // interval cada 10 minutos (600000 ms)
-    const intervalId = setInterval(fetchNotifications, 600000);
-    // limpiar interval al desmontar o cambiar userId
-    return () => clearInterval(intervalId);
+  //Sockets: notificaciones en tiempo real
+  useEffect(() => {
+    if (!userId) return;
+    const socket = io(SOCKET_URL, { transports: ["websocket"] });
+
+    socket.emit("client:join_notifications", userId);
+
+    socket.on("server:new-notification", (notification) => {
+      setNotifications((prev) => [notification, ...prev]);
+    });
+
+    return () => {
+      socket.off("server:new-notification");
+      socket.disconnect();
+    };
   }, [userId]);
 
   //Eliminar una notificación por id
@@ -50,10 +64,10 @@ export const NotificationsContextProvider = ({ children }) => {
   };
 
   return (
-    <NotificationsContext
+    <NotificationsContext.Provider
       value={{ notifications, removeNotification, loading }}
     >
       {children}
-    </NotificationsContext>
+    </NotificationsContext.Provider>
   );
 };

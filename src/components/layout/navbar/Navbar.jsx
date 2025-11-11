@@ -107,6 +107,7 @@ export default function Navbar({ publications }) {
             />
           </div>
 
+          {/* Notifications */}
           <button
             className="relative text-gray-400 hover:text-white transition-colors"
             onClick={() => setViewNotifications(!viewNotifications)}
