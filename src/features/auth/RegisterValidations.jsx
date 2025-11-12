@@ -8,6 +8,9 @@ import {
 } from "../../pages/notification/notification";
 
 function RegisterValidations(onRegisterSuccess) {
+  const { token: tokenPrueba } = useAuth() || {};
+  const token = tokenPrueba || null;
+
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -167,7 +170,7 @@ function RegisterValidations(onRegisterSuccess) {
 
       delete formDataToSend.confirmPassword;
 
-      const response = await createBuyer(formDataToSend);
+      const response = await createBuyer(formDataToSend, token);
 
       // if (isAuthenticated) {
       //   onRegisterSuccess();

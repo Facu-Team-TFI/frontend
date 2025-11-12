@@ -36,12 +36,13 @@ export const createPublication = async (data) => {
   return await res.json();
 };
 
-export const createBuyer = async (data) => {
+export const createBuyer = async (data, token = null) => {
+  const headers = { "Content-Type": "application/json" };
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   const res = await fetch(`${API_URL}/buyers`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: headers,
     body: JSON.stringify(data),
   });
 
