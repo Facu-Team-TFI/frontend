@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { useAuth } from '../../../services/auth/AuthContext.jsx'
-import { Link, useLocation, useNavigate } from 'react-router';
+import { useAuth } from "../../../services/auth/AuthContext.jsx";
+import { Link, useLocation, useNavigate } from "react-router";
 
-import { Close } from '@mui/icons-material';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Close } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-import avatarDefault from '../../../assets/avatarDefault.jpeg';
-import { getSellerByPublicationId } from '../../../services/api';
+import avatarDefault from "../../../assets/avatarDefault.jpeg";
+import { getSellerByPublicationId } from "../../../services/api";
 
 const DetailPublication = () => {
   const [seller, setSeller] = useState(null);
@@ -17,18 +17,27 @@ const DetailPublication = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const publicacion = location.state.publicacion;
-  const { id, title, description, img, price, status, brand, city, category, subCategory } = publicacion;
-
+  const {
+    id,
+    title,
+    description,
+    img,
+    price,
+    status,
+    brand,
+    city,
+    category,
+    subCategory,
+  } = publicacion;
 
   useEffect(() => {
     const fetchSeller = async () => {
       try {
         const data = await getSellerByPublicationId(id);
         setSeller(data);
-        
       } catch (err) {
         console.error(err);
       }
@@ -44,7 +53,7 @@ const DetailPublication = () => {
     }
 
     navigate(`/catalogo/${id}/purchase-details`, {
-      state: { publicacion: { id, title, img, price } }
+      state: { publicacion: { id, title, img, price } },
     });
   };
 
@@ -54,13 +63,13 @@ const DetailPublication = () => {
       return;
     }
 
-    navigate('/chat', {
+    navigate("/chat", {
       state: {
         chatUsers: {
           userID: user.id,
-          sellerID: seller.Buyer?.ID_Buyers
-        }
-      }
+          sellerID: seller.Buyer?.ID_Buyers,
+        },
+      },
     });
   };
   return (
@@ -83,14 +92,24 @@ const DetailPublication = () => {
 
         <div className="flex-1">
           <h2 className="text-2xl font-bold">{title}</h2>
-          <div className='flex'>
-            <p className="bg-[#C5CEBB] rounded-[25px] text-sm text-gray-800 px-5 mr-3">{category?.CategoryName}</p>
-            <p className="bg-[#C5CEBB] rounded-[25px] text-sm text-gray-800 px-5">{subCategory?.NameSubCategory}</p>
+          <div className="flex">
+            <p className="bg-[#C5CEBB] rounded-[25px] text-sm text-gray-800 px-5 mr-3">
+              {category?.CategoryName}
+            </p>
+            <p className="bg-[#C5CEBB] rounded-[25px] text-sm text-gray-800 px-5">
+              {subCategory?.NameSubCategory}
+            </p>
           </div>
-          <p className="mt-2"><strong>Estado:</strong> {status}</p>
+          <p className="mt-2">
+            <strong>Estado:</strong> {status}
+          </p>
           <p className="mt-2 whitespace-pre-line text-sm"> {description}</p>
-          <p className="mt-2"><strong>Marca:</strong> {brand}</p>
-          <p className="mt-2"><strong>Ubicación:</strong> {city?.Province?.Name}, {city?.Name}</p>
+          <p className="mt-2">
+            <strong>Marca:</strong> {brand}
+          </p>
+          <p className="mt-2">
+            <strong>Ubicación:</strong> {city?.Province?.Name}, {city?.Name}
+          </p>
 
           <hr className="my-6 border-black/70" />
 
@@ -116,16 +135,28 @@ const DetailPublication = () => {
           <Link to={`/Perfil/${seller.Buyer?.ID_Buyers}`}>
             <div className="flex items-center gap-3 mt-2">
               <img
-                src={seller.Buyer?.avatarUrl ? `http://localhost:3000${seller.Buyer?.avatarUrl}` : avatarDefault}
-                alt='avatarSeller'
-                className="w-10 h-10 rounded-full bg-gray-300" />
+                src={
+                  seller.Buyer?.avatarUrl
+                    ? seller.Buyer.avatarUrl.startsWith("http")
+                      ? seller.Buyer.avatarUrl
+                      : `http://localhost:3000/${seller.Buyer.avatarUrl}`
+                    : avatarDefault
+                }
+                alt="avatarSeller"
+                className="w-10 h-10 rounded-full bg-gray-300"
+              />
               <div>
-                <p className="font-bold">{seller.Buyer?.BuyersName} {seller.Buyer?.BuyersLastName}</p>
+                <p className="font-bold">
+                  {seller.Buyer?.BuyersName} {seller.Buyer?.BuyersLastName}
+                </p>
                 <p className="text-sm text-gray-700 flex items-center gap-1">
                   <LocationOnIcon fontSize="small" />
-                  {seller.Buyer?.City?.Name}, {seller.Buyer?.City?.Province?.Name}
+                  {seller.Buyer?.City?.Name},{" "}
+                  {seller.Buyer?.City?.Province?.Name}
                 </p>
-                <p className="text-sm text-gray-700">Contacto: {seller.Buyer?.Phone}</p>
+                <p className="text-sm text-gray-700">
+                  Contacto: {seller.Buyer?.Phone}
+                </p>
               </div>
             </div>
           </Link>
