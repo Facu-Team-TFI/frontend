@@ -40,31 +40,6 @@ const PublicationCard = ({
     });
   };
 
-  //   const handleBuyClick = (event) => {
-  //     event.stopPropagation();
-
-  //     if (user.id === id_seller) {
-  //       toast.info("No podés comprar tu propia publicación.");
-
-  //       return;
-  //     }
-
-  //     const publicacion = {
-  //       id,
-  //       title,
-  //       description,
-  //       img,
-  //       price,
-  //       status,
-  //       brand,
-  //       city,
-  //     };
-
-  //     navigate(`/catalogo/${id}/purchase-details`, {
-  //       state: { publicacion },
-  //     });
-  //   };
-
   return (
     <div
       className="
@@ -95,7 +70,6 @@ const PublicationCard = ({
           {city?.Province?.Name}, {city?.Name}
         </p>
         <p className="text-[1.7rem] pb-[5px] m-[0] font-poppins">${price}</p>
-        <p className="text-[1.25rem] pb-[8px] m-[0]">{status}</p>
       </div>
 
       <button
