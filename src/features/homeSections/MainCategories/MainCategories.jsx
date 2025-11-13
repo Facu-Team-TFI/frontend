@@ -6,9 +6,10 @@ import bateria from '../../../assets/bateria.png'
 import teclado from '../../../assets/teclado.png'
 import bajo from '../../../assets/bajo.png'
 import accesoriosMusicales from '../../../assets/accesoriosMusicales.png'
+import { Link } from 'react-router-dom';
 
 const MainCategories = () => {
-  // Datos de categorías (puedes reemplazar con tus categorías reales)
+  // Datos de categorías
   const categories = [
     { name: 'Guitarras acustica', count: 128, image: guitarraAcustica },
     { name: 'Baterías', count: 76, image: bateria },
@@ -58,13 +59,18 @@ const MainCategories = () => {
                     <h3 className="text-2xl font-bold text-white">{category.name}</h3>
                     <p className="text-white/80">{category.count} instrumentos</p>
                   </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#40250D] hover:bg-[#60250D] text-white px-6 py-2 rounded-full font-medium transition-colors"
-                  >
-                    Ver colección
-                  </motion.button>
+                    <Link to={`/catalogo?category=${encodeURIComponent(category.name)}`}>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-[#40250D] hover:bg-[#60250D] text-white px-6 py-2 rounded-full font-medium transition-colors"
+                        type="button"
+                      >
+                        Ver colección
+                      </motion.button>
+                    </Link>
+
+                  
                 </div>
               </div>
             </motion.div>
@@ -73,9 +79,11 @@ const MainCategories = () => {
 
         {/* Botón para ver todas las categorías */}
         <div className="text-center mt-12">
-          <button className="bg-[#60250D] hover:bg-[#40250D] text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-md">
-            Ver todas las categorías
-          </button>
+          <Link to="/catalogo">
+            <button className="bg-[#60250D] hover:bg-[#40250D] text-white px-8 py-3 rounded-full font-bold transition-all duration-300 shadow-md">
+              Ver todas las categorías
+            </button>
+          </Link>
         </div>
       </div>
     </section>

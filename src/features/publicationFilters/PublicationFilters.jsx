@@ -1,3 +1,6 @@
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 const PublicationFilters = ({
   publications,
   selectedCategory,
@@ -11,6 +14,10 @@ const PublicationFilters = ({
   onCityChange,
   onStateChange,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // 🔹 Listas de opciones únicas
   const provinces = [...new Map(
     publications
       .map(p => [p.City?.Province?.ID_Province, p.City?.Province?.Name])
@@ -36,25 +43,40 @@ const PublicationFilters = ({
     )
   ].map(([id, name]) => ({ id, name }));
 
+  // 🔹 Cuando cambia la categoría
+  const handleCategoryChange = (value) => {
+    onCategoryChange(value);
+    onSubcategoryChange('');
+
+    // Actualizar la URL con el nombre de la categoría
+    const params = new URLSearchParams(location.search);
+    if (value) {
+      const categoryObj = categories.find(c => c.id === parseInt(value));
+      if (categoryObj) params.set("category", categoryObj.name);
+    } else {
+      params.delete("category");
+    }
+
+    navigate(`${location.pathname}?${params.toString()}`);
+  };
+
   return (
     <aside className="w-72 sticky top-[100px] self-start space-y-4 mr-[100px]">
-
       <h2 className="text-3xl font-bold mb-4 border-b-2 border-black pb-2 uppercase tracking-wide">
         Filtros
       </h2>
 
+      {/* 🔹 CATEGORÍAS */}
       <section>
         <h3 className="text-lg font-bold mb-3 mt-5 pb-1">
           Por categorías:
         </h3>
+
         <div>
           <label className="block mb-1 font-medium text-gray-800">Categoría</label>
           <select
             value={selectedCategory}
-            onChange={(e) => {
-              onCategoryChange(e.target.value);
-              onSubcategoryChange('');
-            }}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="w-full p-2 rounded border border-gray-400 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Todas</option>
@@ -80,10 +102,10 @@ const PublicationFilters = ({
         </div>
       </section>
 
+      {/* 🔹 UBICACIÓN */}
       <section className="mt-6">
-        <h3 className="text-lg font-bold mb-2 pb-1">
-          Por ubicación:
-        </h3>
+        <h3 className="text-lg font-bold mb-2 pb-1">Por ubicación:</h3>
+
         <div>
           <label className="block mb-1 font-medium text-gray-800">Provincia</label>
           <select
@@ -116,6 +138,8 @@ const PublicationFilters = ({
           </select>
         </div>
       </section>
+
+      {/* 🔹 ESTADO */}
       <section className="mt-6">
         <h3 className="text-lg font-bold mb-2 pb-1">Por estado:</h3>
         <select
@@ -131,7 +155,6 @@ const PublicationFilters = ({
         </select>
       </section>
     </aside>
-
   );
 };
 
