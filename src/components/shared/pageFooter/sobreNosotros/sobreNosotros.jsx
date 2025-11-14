@@ -1,29 +1,46 @@
 import React from "react";
-import foto_Gio from '../../../../assets/foto_Gio.jpg'
-import foto_Marcos from '../../../../assets/foto_Marcos.png'
-import foto_Piero from '../../../../assets/foto_Piero.png'
+import foto_luppi from "../../../../assets/foto_luppi.jpeg";
+import foto_Marcos from "../../../../assets/foto_Marcos.png";
+import foto_facundo from "../../../../assets/foto_facundo.jpg";
 
 const AboutUs = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       {/* Hero Section */}
       <section className="mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6" id="quienes-somos">Vivimos por la música</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6" id="quienes-somos">
+          Vivimos por la música
+        </h1>
         <div className="grid md:grid-cols-2 gap-8">
           <div>
             <p className="mb-4">
-              En CarpiChords, creemos que cada instrumento musical tiene una historia que contar y un nuevo dueño que espera. Somos el puente entre músicos que buscan darle una segunda vida a sus instrumentos y aquellos que buscan su compañero musical perfecto.
+              En CarpiChords, creemos que cada instrumento musical tiene una
+              historia que contar y un nuevo dueño que espera. Somos el puente
+              entre músicos que buscan darle una segunda vida a sus instrumentos
+              y aquellos que buscan su compañero musical perfecto.
             </p>
             <p className="mb-4">
-              Nuestra plataforma está diseñada por músicos, para músicos. Entendemos la emoción de encontrar ese instrumento especial y la importancia de que llegue a manos adecuadas. Cada guitarra, piano, violín o batería en nuestro marketplace ha sido cuidadosamente seleccionado para garantizar calidad y autenticidad.
+              Nuestra plataforma está diseñada por músicos, para músicos.
+              Entendemos la emoción de encontrar ese instrumento especial y la
+              importancia de que llegue a manos adecuadas. Cada guitarra, piano,
+              violín o batería en nuestro marketplace ha sido cuidadosamente
+              seleccionado para garantizar calidad y autenticidad.
             </p>
           </div>
           <div>
             <p className="mb-4">
-              Más que un marketplace, somos una comunidad apasionada por la música. Ofrecemos imagenes de los instrumentos muy detallados para que puedas visualizarlos de la mejor manera, consejos de expertos para mantener tu equipo en perfecto estado, y un sistema seguro para que tus transacciones sean tan fluidas como una melodía bien ejecutada.
+              Más que un marketplace, somos una comunidad apasionada por la
+              música. Ofrecemos imagenes de los instrumentos muy detallados para
+              que puedas visualizarlos de la mejor manera, consejos de expertos
+              para mantener tu equipo en perfecto estado, y un sistema seguro
+              para que tus transacciones sean tan fluidas como una melodía bien
+              ejecutada.
             </p>
             <p className="mb-4">
-              Ya seas un profesional buscando equipo de estudio, un coleccionista en busca de piezas únicas, o un principiante dando sus primeros pasos, en CarpiChords encontrarás exactamente lo que necesitas para hacer sonar tu música.
+              Ya seas un profesional buscando equipo de estudio, un
+              coleccionista en busca de piezas únicas, o un principiante dando
+              sus primeros pasos, en CarpiChords encontrarás exactamente lo que
+              necesitas para hacer sonar tu música.
             </p>
           </div>
         </div>
@@ -51,38 +68,59 @@ const AboutUs = () => {
 
       {/* Values Section */}
       <section className="mb-16">
-        <h2 className="text-3xl font-bold mb-6" id="nuestro-valores">Nuestros valores</h2>
+        <h2 className="text-3xl font-bold mb-6" id="nuestro-valores">
+          Nuestros valores
+        </h2>
         <p className="mb-8 max-w-2xl">
-          En CarpiChords, cada nota cuenta. Estos son los principios que guían nuestra armonía diaria.
+          En CarpiChords, cada nota cuenta. Estos son los principios que guían
+          nuestra armonía diaria.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-6">
             <div>
               <h3 className="font-bold text-lg mb-2">Pasión por la música.</h3>
-              <p className="text-gray-600">Vivimos y respiramos música. Cada instrumento en nuestra plataforma es tratado con el respeto que merece.</p>
+              <p className="text-gray-600">
+                Vivimos y respiramos música. Cada instrumento en nuestra
+                plataforma es tratado con el respeto que merece.
+              </p>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-2">Transparencia.</h3>
-              <p className="text-gray-600">Información clara, fotos detalladas y descripciones honestas para que compres con confianza.</p>
+              <p className="text-gray-600">
+                Información clara, fotos detalladas y descripciones honestas
+                para que compres con confianza.
+              </p>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-2">Comunidad.</h3>
-              <p className="text-gray-600">Conectamos músicos, facilitamos encuentros y creamos oportunidades para crecer juntos.</p>
+              <p className="text-gray-600">
+                Conectamos músicos, facilitamos encuentros y creamos
+                oportunidades para crecer juntos.
+              </p>
             </div>
           </div>
           <div className="space-y-6">
             <div>
               <h3 className="font-bold text-lg mb-2">Excelencia musical.</h3>
-              <p className="text-gray-600">Solo aceptamos instrumentos que cumplan nuestros estándares de calidad para músicos exigentes.</p>
+              <p className="text-gray-600">
+                Solo aceptamos instrumentos que cumplan nuestros estándares de
+                calidad para músicos exigentes.
+              </p>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-2">Innovación constante.</h3>
-              <p className="text-gray-600">Implementamos las últimas tecnologías para hacer tu experiencia de compraventa más fácil y segura.</p>
+              <p className="text-gray-600">
+                Implementamos las últimas tecnologías para hacer tu experiencia
+                de compraventa más fácil y segura.
+              </p>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-2">Sostenibilidad.</h3>
-              <p className="text-gray-600">Promovemos la economía circular dando segundas oportunidades a instrumentos con mucho por aportar.</p>
+              <p className="text-gray-600">
+                Promovemos la economía circular dando segundas oportunidades a
+                instrumentos con mucho por aportar.
+              </p>
             </div>
           </div>
         </div>
@@ -92,7 +130,9 @@ const AboutUs = () => {
       <section className="mb-16" id="nuestro-equipo">
         <h2 className="text-3xl font-bold mb-6">Nuestro equipo</h2>
         <p className="mb-8 max-w-3xl">
-          Tres programadores full stack apasionados por la música y la tecnología, creando la mejor plataforma para compra y venta de instrumentos musicales.
+          Tres programadores full stack apasionados por la música y la
+          tecnología, creando la mejor plataforma para compra y venta de
+          instrumentos musicales.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -101,18 +141,25 @@ const AboutUs = () => {
             <div className="h-48 bg-[#60250D] flex items-center justify-center">
               {/* Reemplaza con tu foto */}
               <img
-                src={foto_Gio}
+                src={foto_facundo}
                 alt="Tu nombre"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">Giovani Luciano Seta</h3>
-              <p className="text-white font-medium mb-2">Full Stack Developer</p>
-              <p className="text-white mb-4">Especializado en Web & Mobile App</p>
+              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">
+                Mandon Facundo
+              </h3>
+              <p className="text-white font-medium mb-2">
+                Full Stack Developer
+              </p>
               <div className="flex items-center">
-                <span className="text-sm text-gray-300 mr-2">También toca:</span>
-                <span className="text-[#FFD8A9] font-medium">Guitarra y bajo</span>
+                <span className="text-sm text-gray-300 mr-2">
+                  También toca:
+                </span>
+                <span className="text-[#FFD8A9] font-medium">
+                  Guitarra y bajo
+                </span>
               </div>
             </div>
           </div>
@@ -121,18 +168,23 @@ const AboutUs = () => {
           <div className="bg-[#40250D] rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <div className="h-48 bg-[#60250D] flex items-center justify-center">
               <img
-                src={foto_Piero}
+                src={foto_luppi}
                 alt="Compañero 1"
                 className="h-full w-full object-cover"
               />
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">Alessandro Gonzales</h3>
-              <p className="text-white font-medium mb-2">Full Stack Developer</p>
-              <p className="text-white mb-4">Especializado en Web & Mobile App</p>
+              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">
+                Luppi Lucas
+              </h3>
+              <p className="text-white font-medium mb-2">
+                Full Stack Developer
+              </p>
               <div className="flex items-center">
-                <span className="text-sm text-gray-300 mr-2">También toca:</span>
-                <span className="text-[#FFD8A9] font-medium">Guitarra y voz</span>
+                <span className="text-sm text-gray-300 mr-2">
+                  También toca:
+                </span>
+                <span className="text-[#FFD8A9] font-medium">Violín</span>
               </div>
             </div>
           </div>
@@ -147,12 +199,19 @@ const AboutUs = () => {
               />
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">Marcos Galarza</h3>
-              <p className="text-white font-medium mb-2">Full Stack Developer</p>
-              <p className="text-white mb-4">Especializado en Web & Mobile App</p>
+              <h3 className="text-xl font-bold mb-1 text-[#FFD8A9]">
+                Galarza Marcos
+              </h3>
+              <p className="text-white font-medium mb-2">
+                Full Stack Developer
+              </p>
               <div className="flex items-center">
-                <span className="text-sm text-gray-300 mr-2">También toca:</span>
-                <span className="text-[#FFD8A9] font-medium">Ningun instrumento</span>
+                <span className="text-sm text-gray-300 mr-2">
+                  También toca:
+                </span>
+                <span className="text-[#FFD8A9] font-medium">
+                  Ningun instrumento
+                </span>
               </div>
             </div>
           </div>
@@ -163,7 +222,9 @@ const AboutUs = () => {
       <section id="sumate-equipo">
         <h2 className="text-3xl font-bold mb-6">Únete como vendedor</h2>
         <p className="mb-8 max-w-2xl">
-          ¿Tienes instrumentos musicales que quieras vender o quieres convertirte en vendedor profesional en nuestra plataforma? Únete a nuestra comunidad de vendedores verificados.
+          ¿Tienes instrumentos musicales que quieras vender o quieres
+          convertirte en vendedor profesional en nuestra plataforma? Únete a
+          nuestra comunidad de vendedores verificados.
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -234,13 +295,37 @@ const AboutUs = () => {
 
 // Team members data
 const teamMembers = [
-  { name: "Carlos Pérez", position: "CEO & Fundador", instrument: "Guitarra/Piano" },
-  { name: "María Rodríguez", position: "Directora Musical", instrument: "Violín" },
+  {
+    name: "Carlos Pérez",
+    position: "CEO & Fundador",
+    instrument: "Guitarra/Piano",
+  },
+  {
+    name: "María Rodríguez",
+    position: "Directora Musical",
+    instrument: "Violín",
+  },
   { name: "David Fernández", position: "CTO", instrument: "Batería" },
-  { name: "Laura Gómez", position: "Directora de Marketing", instrument: "Voz" },
-  { name: "Javier López", position: "Experto en Guitarras", instrument: "Guitarra eléctrica" },
-  { name: "Ana Martínez", position: "Directora de Comunidad", instrument: "Bajo" },
-  { name: "Pablo Sánchez", position: "Desarrollador Senior", instrument: "Teclados" },
+  {
+    name: "Laura Gómez",
+    position: "Directora de Marketing",
+    instrument: "Voz",
+  },
+  {
+    name: "Javier López",
+    position: "Experto en Guitarras",
+    instrument: "Guitarra eléctrica",
+  },
+  {
+    name: "Ana Martínez",
+    position: "Directora de Comunidad",
+    instrument: "Bajo",
+  },
+  {
+    name: "Pablo Sánchez",
+    position: "Desarrollador Senior",
+    instrument: "Teclados",
+  },
   { name: "Sofía Martín", position: "Diseñadora UX", instrument: "Flauta" },
 ];
 

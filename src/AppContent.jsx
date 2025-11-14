@@ -52,7 +52,10 @@ const AppContent = () => {
   }, []);
 
   const hideLayout =
-    location.pathname === "/login" || location.pathname === "/Register";
+    location.pathname === "/login" ||
+    location.pathname === "/Register" ||
+    location.pathname.startsWith("/auth/forgot-password") ||
+    location.pathname.startsWith("/auth/reset-password");
 
   return (
     <div
