@@ -19,7 +19,6 @@ const initialState = {
   description: "",
   image: null,
   //   image: "",
-  cityId: "",
 };
 
 const PublicationFormSeller = ({ onRefresh }) => {

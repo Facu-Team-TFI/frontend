@@ -49,7 +49,7 @@ const PublicationCard = ({
                 h-[430px]
                 bg-[#401809] 
                 text-[#fff] 
-                my-[15px] mx-auto 
+                my-[10px]
                 rounded-[10px] 
                 shadow-[5px_5px_5px_rgba(0,0,0,0.25)]
                 "

@@ -1,4 +1,3 @@
-import React from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +11,14 @@ const NotificationCard = ({
   const handleClick = () => {
     setViewNotifications(false);
 
-    navigate(`/Chat`); // ajustar la ruta para ir al chat específico
+    switch (notification.type) {
+      case "mensaje":
+        navigate(`/Chat`); // ajustar la ruta para ir al chat específico
+        break;
+      case "compraExitosa":
+        navigate(`/MisPedidos`);
+        break;
+    }
   };
 
   return (
@@ -37,7 +43,7 @@ const NotificationCard = ({
       {/* Botón de eliminar */}
       <button
         onClick={(e) => {
-          e.stopPropagation(); // evita navegar al chat
+          e.stopPropagation(); // evita navegación
           removeNotification(notification.id);
         }}
         className="

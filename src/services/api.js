@@ -1,7 +1,12 @@
 const API_URL = "http://localhost:3000";
 
 export const getPublications = async () => {
-  const res = await fetch(`${API_URL}/publications`);
+  const res = await fetch(`${API_URL}/publications`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   if (!res.ok) throw new Error("Error al obtener publicaciones");
   return await res.json();
 };
