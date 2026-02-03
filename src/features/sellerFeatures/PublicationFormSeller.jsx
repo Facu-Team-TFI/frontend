@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   notifySuccessAdd,
   notifyMissingFields,
@@ -29,6 +29,9 @@ const PublicationFormSeller = ({ onRefresh }) => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
 
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const fileInputRef = useRef(null);
+
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -51,6 +54,23 @@ const PublicationFormSeller = ({ onRefresh }) => {
 
     fetchInitialData();
   }, []);
+
+  // Generar / limpiar la URL de preview cada vez que cambia formData.image
+  useEffect(() => {
+    // Si no hay archivo o no es File, quitamos preview
+    if (!(formData.image instanceof File)) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    const url = URL.createObjectURL(formData.image);
+    setPreviewUrl(url);
+
+    // Cleanup: revocar URL cuando cambia el archivo o se desmonta
+    return () => {
+      URL.revokeObjectURL(url);
+    };
+  }, [formData.image]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,19 +103,13 @@ const PublicationFormSeller = ({ onRefresh }) => {
         body: data, // ⚠️ sin headers manuales
       });
 
-      //   const response = await fetch("http://localhost:3000/publications", {
-      //     method: "POST",
-      //     headers: { "Content-Type": "application/json" },
-      //     body: JSON.stringify({
-      //       ...formData,
-      //       price: parseFloat(formData.price),
-      //       sellerId: user.seller?.id,
-      //     }),
-      //   });
-
       if (!response.ok) throw new Error("Error en la publicación");
       notifySuccessAdd(`¡${formData.name} publicada con éxito!`);
+
+      // Reset del form + preview + input file
       setFormData(initialState);
+      setPreviewUrl(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
       onRefresh();
       navigate("/vender");
     } catch (err) {
@@ -128,7 +142,6 @@ const PublicationFormSeller = ({ onRefresh }) => {
         newErrors.image = "Formato de imagen inválido.";
       }
     }
-    // if (!formData.image.trim()) newErrors.image = "La URL de la imagen es obligatoria.";
     return newErrors;
   };
 
@@ -138,7 +151,7 @@ const PublicationFormSeller = ({ onRefresh }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/ciudades/${selectedProvinceId}`
+        `http://localhost:3000/ciudades/${selectedProvinceId}`,
       );
       const data = await res.json();
       setCities(data);
@@ -157,7 +170,7 @@ const PublicationFormSeller = ({ onRefresh }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/${selectedCategoryId}/subcategorias`
+        `http://localhost:3000/${selectedCategoryId}/subcategorias`,
       );
       const data = await res.json();
       setSubCategories(data);
@@ -167,12 +180,45 @@ const PublicationFormSeller = ({ onRefresh }) => {
   };
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-      //   [name]: value,
-    }));
+    const { name, value, files, type } = e.target;
+
+    if (type === "file") {
+      const file = files?.[0];
+      if (!file) return;
+
+      // Validaciones reales
+      if (!file.type.startsWith("image/")) {
+        setErrors((prev) => ({
+          ...prev,
+          image: "El archivo no es una imagen.",
+        }));
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        setFormData((prev) => ({ ...prev, image: null }));
+        setPreviewUrl(null);
+        return;
+      }
+      const MAX_MB = 5;
+      if (file.size > MAX_MB * 1024 * 1024) {
+        setErrors((prev) => ({
+          ...prev,
+          image: `La imagen supera ${MAX_MB} MB.`,
+        }));
+        if (fileInputRef.current) fileInputRef.current.value = "";
+        setFormData((prev) => ({ ...prev, image: null }));
+        setPreviewUrl(null);
+        return;
+      }
+
+      // OK
+      setErrors((prev) => {
+        const { image, ...rest } = prev;
+        return rest;
+      });
+      setFormData((prev) => ({ ...prev, image: file }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
@@ -369,45 +415,62 @@ const PublicationFormSeller = ({ onRefresh }) => {
         </label>
 
         <label>
-          Archivo de imagen:
-          <div style={{ position: "relative", marginTop: "0.5rem" }}>
-            <input
-              type="file"
-              accept="image/*"
-              name="image"
-              id="fileInput"
-              onChange={handleChange}
+          Imagen:
+          {previewUrl && (
+            <div
               style={{
-                position: "absolute",
-                left: 0,
-                top: 0,
-                opacity: 0,
-                width: "100%",
-                height: "100%",
-                cursor: "pointer",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "0.5rem",
+                marginBottom: "0.5rem",
               }}
-            />
-            <button
-              type="button"
-              style={{
-                width: "100%",
-                backgroundColor: "#A46B3E", // tono cálido, combina con el marrón
-                color: "#fff",
-                padding: "0.75rem",
-                border: "none",
-                borderRadius: "8px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                textAlign: "center",
-                transition: "background-color 0.2s ease",
-              }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#8C5D34")}
-              onMouseOut={(e) => (e.target.style.backgroundColor = "#A46B3E")}
-              onClick={() => document.getElementById("fileInput").click()}
             >
-              {formData.image ? "Imagen seleccionada" : "Seleccionar imagen"}
-            </button>
-          </div>
+              <img
+                src={previewUrl}
+                alt="Previsualización"
+                style={{
+                  height: 160,
+                  width: 160,
+                  objectFit: "cover",
+                  borderRadius: 8,
+                  border: "1px solid #000",
+                  background: "#f5e9cf",
+                }}
+                onError={(e) => {
+                  if (e.currentTarget.dataset.fallback !== "1") {
+                    e.currentTarget.src =
+                      "data:image/svg+xml;charset=utf-8," +
+                      encodeURIComponent(
+                        `<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><rect width='100%' height='100%' fill='#f5e9cf'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#6b4a3a' font-size='12'>Imagen no disponible</text></svg>`,
+                      );
+                    e.currentTarget.dataset.fallback = "1";
+                  }
+                }}
+              />
+            </div>
+          )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            aria-invalid={!!errors.image}
+            className="
+    block w-full text-sm text-[#401809]
+    file:mr-4 file:py-2 file:px-4
+    file:rounded-md file:border-0
+    file:text-sm file:font-medium
+    file:bg-[#401809] file:text-[#FDE7B9]
+    hover:file:bg-[#2e1005]
+    file:cursor-pointer cursor-pointer
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2e1005]
+    bg-[#FDF3D9] border border-[#401809] rounded-md p-1
+            "
+            style={{
+              marginTop: "0.5rem",
+            }}
+          />
           {errors.image && <span style={errorStyle}>{errors.image}</span>}
         </label>
 
