@@ -42,7 +42,7 @@ export const NotificationsContextProvider = ({ children }) => {
       setNotifications((prev) => [notification, ...prev]);
     });
 
-    return () => {
+    return () => { //el return en un componente solo se ejecuta cuando se desmonta el componente o cambia el userId
       socket.off("server:new-notification");
       socket.disconnect();
     };

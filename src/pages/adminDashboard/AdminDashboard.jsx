@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../services/auth/AuthContext";
 import Register from "../../features/auth/register";
-import { motion } from 'framer-motion';
-import { notifyMissingFields, notifySuccessAdd } from "../notification/notification";
+import { motion } from "framer-motion";
+import {
+  notifyMissingFields,
+  notifySuccessAdd,
+} from "../notification/notification";
 
 async function updatePublication(id, data) {
   const res = await fetch(`http://localhost:3000/publications/${id}`, {
@@ -22,6 +25,10 @@ const AdminDashboard = ({ onRefresh }) => {
   const [publications, setPublications] = useState([]);
   const [sellers, setSellers] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 5;
+
   const [editingPost, setEditingPost] = useState(null);
   const [formData, setFormData] = useState({});
 
@@ -29,14 +36,14 @@ const AdminDashboard = ({ onRefresh }) => {
     show: false,
     type: null,
     id: null,
-    message: '',
+    message: "",
   });
 
   useEffect(() => {
     fetchUsers();
     fetchPublications();
     fetchSellers();
-  }, []);
+  }, [currentPage]);
 
   const fetchUsers = async () => {
     try {
@@ -52,7 +59,7 @@ const AdminDashboard = ({ onRefresh }) => {
     }
   };
 
-  const fetchPublications = async () => {
+  /*const fetchPublications = async () => {
     try {
       const res = await fetch("http://localhost:3000/admin/publicaciones", {
         headers: {
@@ -64,6 +71,26 @@ const AdminDashboard = ({ onRefresh }) => {
       setPublications(data);
     } catch (error) {
       console.error("Error al obtener publicaciones", error);
+    }
+  };*/
+  const fetchPublications = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/admin/publicaciones?page=${currentPage}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const data = await res.json();
+
+      setPublications(data.rows || []);
+      setTotalPages(data.totalPages || 1);
+    } catch (error) {
+      console.error("Error al obtener publicaciones", error);
+      setPublications([]);
     }
   };
 
@@ -97,10 +124,10 @@ const AdminDashboard = ({ onRefresh }) => {
         setUsers(users.filter((u) => u.ID_Buyers !== id));
       }
       fetchUsers();
-      notifySuccessAdd('!Se elimino el usuario con exito!')
+      notifySuccessAdd("!Se elimino el usuario con exito!");
     } catch (error) {
       console.error("Error al eliminar usuario", error);
-      notifyMissingFields(`¡Hubo un error al eliminar el usuario!`)
+      notifyMissingFields(`¡Hubo un error al eliminar el usuario!`);
       closeConfirm();
     }
   };
@@ -122,11 +149,10 @@ const AdminDashboard = ({ onRefresh }) => {
         setPublications(publications.filter((p) => p.ID_Publication !== id));
       }
       fetchPublications();
-      notifySuccessAdd(`¡Eliminacion de publicacion con exito!`)
-
+      notifySuccessAdd(`¡Eliminacion de publicacion con exito!`);
     } catch (error) {
       console.error("Error al eliminar publicación", error);
-      notifyMissingFields(`!Error al eliminar publicacion`)
+      notifyMissingFields(`!Error al eliminar publicacion`);
       closeConfirm();
     }
   };
@@ -147,10 +173,10 @@ const AdminDashboard = ({ onRefresh }) => {
         setSellers(sellers.filter((s) => s.ID_Buyers !== id));
       }
       fetchSellers();
-      notifySuccessAdd(`¡Se elimino un usuario!`)
+      notifySuccessAdd(`¡Se elimino un usuario!`);
     } catch (error) {
       console.error("Error al eliminar usuario", error);
-      notifyMissingFields(`¡Error al eliminar el usuario!`)
+      notifyMissingFields(`¡Error al eliminar el usuario!`);
       closeConfirm();
     }
   };
@@ -200,7 +226,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
@@ -208,15 +234,17 @@ const AdminDashboard = ({ onRefresh }) => {
       await updatePublication(editingPost.ID_Publication, formData);
       setPublications((prev) =>
         prev.map((pub) =>
-          pub.ID_Publication === editingPost.ID_Publication ? { ...pub, ...formData } : pub
-        )
+          pub.ID_Publication === editingPost.ID_Publication
+            ? { ...pub, ...formData }
+            : pub,
+        ),
       );
       onRefresh();
       closeEditor();
-      notifySuccessAdd(`¡Cambios Guardados!`)
+      notifySuccessAdd(`¡Cambios Guardados!`);
     } catch (error) {
       console.error("Error guardando publicación:", error);
-      notifyMissingFields(`¡Error al guardar cambios!`)
+      notifyMissingFields(`¡Error al guardar cambios!`);
     }
   };
 
@@ -225,7 +253,6 @@ const AdminDashboard = ({ onRefresh }) => {
       <h2 className="text-4xl font-bold mt-10">Panel de Administración</h2>
       <div className="p-6 relative flex flex-col lg:flex-row gap-6 w-full">
         <div className="flex-1 pl-[100px]">
-
           <section className="mb-8">
             <h3 className="text-2xl font-semibold mb-2">Usuarios</h3>
             <ul className="space-y-2">
@@ -271,7 +298,9 @@ const AdminDashboard = ({ onRefresh }) => {
                       Editar
                     </button>
                     <button
-                      onClick={() => openConfirm("publication", pub.ID_Publication)}
+                      onClick={() =>
+                        openConfirm("publication", pub.ID_Publication)
+                      }
                       className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                     >
                       Eliminar
@@ -280,6 +309,27 @@ const AdminDashboard = ({ onRefresh }) => {
                 </li>
               ))}
             </ul>
+            <div className="flex justify-center items-center gap-4 mt-4">
+              <button
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((prev) => prev - 1)}
+                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+              >
+                Anterior
+              </button>
+
+              <span>
+                Página {currentPage} de {totalPages}
+              </span>
+
+              <button
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((prev) => prev + 1)}
+                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+              >
+                Siguiente
+              </button>
+            </div>
           </section>
 
           <section className="mb-8">
@@ -323,21 +373,68 @@ const AdminDashboard = ({ onRefresh }) => {
               >
                 ×
               </button>
-              <h3 className="text-2xl font-bold text-[#401809] mb-6 text-center font-poppins">Editar Publicación</h3>
+              <h3 className="text-2xl font-bold text-[#401809] mb-6 text-center font-poppins">
+                Editar Publicación
+              </h3>
               <div className="flex flex-col gap-3">
-                <input name="Title" value={formData.Title || ""} onChange={handleChange} placeholder="Título" className="p-2 rounded border border-[#401809]" />
-                <input name="Brand" value={formData.Brand || ""} onChange={handleChange} placeholder="Marca" className="p-2 rounded border border-[#401809]" />
-                <input name="Price" value={formData.Price || ""} onChange={handleChange} placeholder="Precio" type="number" className="p-2 rounded border border-[#401809]" />
-                <input name="ImageUrl" value={formData.ImageUrl || ""} onChange={handleChange} placeholder="URL de imagen" className="p-2 rounded border border-[#401809]" />
-                <textarea name="DescriptionProduct" value={formData.DescriptionProduct || ""} onChange={handleChange} placeholder="Descripción" className="p-2 rounded border border-[#401809]" />
-                <input name="Sku" value={formData.Sku || ""} onChange={handleChange} placeholder="SKU" className="p-2 rounded border border-[#401809]" />
-                <select name="State" value={formData.State || ""} onChange={handleChange} className="p-2 rounded border border-[#401809]">
+                <input
+                  name="Title"
+                  value={formData.Title || ""}
+                  onChange={handleChange}
+                  placeholder="Título"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <input
+                  name="Brand"
+                  value={formData.Brand || ""}
+                  onChange={handleChange}
+                  placeholder="Marca"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <input
+                  name="Price"
+                  value={formData.Price || ""}
+                  onChange={handleChange}
+                  placeholder="Precio"
+                  type="number"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <input
+                  name="ImageUrl"
+                  value={formData.ImageUrl || ""}
+                  onChange={handleChange}
+                  placeholder="URL de imagen"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <textarea
+                  name="DescriptionProduct"
+                  value={formData.DescriptionProduct || ""}
+                  onChange={handleChange}
+                  placeholder="Descripción"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <input
+                  name="Sku"
+                  value={formData.Sku || ""}
+                  onChange={handleChange}
+                  placeholder="SKU"
+                  className="p-2 rounded border border-[#401809]"
+                />
+                <select
+                  name="State"
+                  value={formData.State || ""}
+                  onChange={handleChange}
+                  className="p-2 rounded border border-[#401809]"
+                >
                   <option value="nuevo">Nuevo</option>
                   <option value="usado">Usado</option>
                   <option value="Poco usado">Poco usado</option>
                   <option value="Reparado">Reparado</option>
                 </select>
-                <button onClick={handleSave} className="mt-4 bg-[#401809] text-[#FDE7B9] px-4 py-2 rounded hover:bg-[#2e1005] transition">
+                <button
+                  onClick={handleSave}
+                  className="mt-4 bg-[#401809] text-[#FDE7B9] px-4 py-2 rounded hover:bg-[#2e1005] transition"
+                >
                   Guardar cambios
                 </button>
               </div>

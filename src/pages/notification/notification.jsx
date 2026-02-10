@@ -1,4 +1,7 @@
 // components/notifications.js
+
+// NOTA: Esto no debería ir en pages, pues no se renderiza ni devuelve ninguna página, solo es lógica reutilizable
+// para las notificaciones. Es un estandar de notificaciones, modificable desde acá para no tener que tocar cada notificación
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
