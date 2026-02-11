@@ -243,7 +243,7 @@ const MyPosts = ({ posts, setPosts, onRefresh }) => {
                 </p>
               </div>
 
-              <div className="absolute top-2 left-2 flex space-x-[130px]">
+              <div className="absolute top-2 flex justify-between w-full px-2">
                 <button
                   onClick={() => handleDelete(post.ID_Publication)}
                   className="bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700 transition"

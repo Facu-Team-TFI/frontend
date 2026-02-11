@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PublicationFilters from "../../publicationFilters/PublicationFilters";
 import PublicationCard from "../publicationCard/PublicationCard";
 import { useSearch } from "../../../services/auth/SearchContext";
@@ -11,6 +11,7 @@ const PublicationList = ({ publications }) => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedState, setSelectedState] = useState("");
+  const { searchTitle } = useSearch();
 
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get("category"); // <- nombre correcto
@@ -26,7 +27,7 @@ const PublicationList = ({ publications }) => {
       const categoryFound = publications.find(
         (p) =>
           p.Category?.CategoryName &&
-          normalize(p.Category.CategoryName) === normalize(categoryParam)
+          normalize(p.Category.CategoryName) === normalize(categoryParam),
       );
 
       if (categoryFound) {
@@ -34,8 +35,6 @@ const PublicationList = ({ publications }) => {
       }
     }
   }, [categoryParam, publications]);
-
-  const { searchTitle } = useSearch();
 
   const filteredPublications = publications.filter((p) => {
     const matchCategory = selectedCategory

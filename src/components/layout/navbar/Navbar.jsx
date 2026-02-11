@@ -15,7 +15,7 @@ export default function Navbar({ publications }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
   const { searchTitle, setSearchTitle } = useSearch();
-  const [searchButton, setSearchButton] = useState(false); // Esta línea está duplicada, puedes eliminar una
+  const [searchButton, setSearchButton] = useState(false);
   const { notifications, removeNotification } =
     useContext(NotificationsContext);
   const [viewNotifications, setViewNotifications] = useState(false);
@@ -70,15 +70,7 @@ export default function Navbar({ publications }) {
                 to="/vender"
                 className="hover:text-gray-300 transition-colors"
               >
-                Vender
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contacto"
-                className="hover:text-gray-300 transition-colors"
-              >
-                Contacto
+                Ventas
               </Link>
             </li>
             {user?.isAdmin && (
@@ -87,7 +79,7 @@ export default function Navbar({ publications }) {
                   to="/panel-admin"
                   className="hover:text-gray-300 transition-colors"
                 >
-                  Panel Administrador
+                  Admin
                 </Link>
               </li>
             )}
@@ -165,7 +157,7 @@ export default function Navbar({ publications }) {
           value={searchTitle}
           onChange={handleSearchChange}
           placeholder="Buscar..."
-          className="min-[650px]:hidden w-full bg-[#60250D] text-white pl-10 pr-4 py-4 mt-3 text-sm placeholder-gray-400 focus:outline-none"
+          className="min-[650px]:hidden fixed top-[64px] z-40 w-screen bg-[#60250D] text-white pl-10 pr-4 py-4 mt-3 text-sm placeholder-gray-400 focus:outline-none"
         />
       )}
 

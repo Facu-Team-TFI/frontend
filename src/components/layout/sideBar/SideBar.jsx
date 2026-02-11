@@ -11,7 +11,7 @@ import {
   ArrowLeftOnRectangleIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/solid";
-import { Bell, Boxes, Tag, Mail } from "lucide-react";
+import { Bell, Boxes, Tag, Mail, LayoutDashboard } from "lucide-react";
 
 import { useAuth } from "../../../services/auth/AuthContext";
 import { useNavigate } from "react-router";
@@ -31,7 +31,6 @@ const useIsMobile = () => {
 
 const sidebarOptions = [
   { text: "Home", Icon: Squares2X2Icon, route: "/home" },
-  { text: "Mis Publicaciones", Icon: TagIcon, route: "/vender" },
   {
     text: "Subir Publicación",
     Icon: ArrowUpTrayIcon,
@@ -40,14 +39,13 @@ const sidebarOptions = [
   { text: "Mis Pedidos", Icon: DocumentTextIcon, route: "/MisPedidos" },
   { text: "Chat", Icon: ChatBubbleLeftRightIcon, route: "/Chat" },
   { text: "Perfil", Icon: UserIcon, route: "/Perfil" },
+  { text: "Contacto", Icon: Mail, route: "/contacto" },
 ];
 
 const sidebarOptionsMobile = [
   { text: "Home", Icon: Squares2X2Icon, route: "/home" },
   { text: "Catálogo", Icon: Boxes, route: "/catalogo" },
-  { text: "Vender", Icon: Tag, route: "/registro-vendedor" },
-  { text: "Contacto", Icon: Mail, route: "/contacto" },
-  { text: "Mis Publicaciones", Icon: TagIcon, route: "/vender" },
+  { text: "Ventas", Icon: Tag, route: "/vender" },
   {
     text: "Subir Publicación",
     Icon: ArrowUpTrayIcon,
@@ -56,6 +54,7 @@ const sidebarOptionsMobile = [
   { text: "Mis Pedidos", Icon: DocumentTextIcon, route: "/MisPedidos" },
   { text: "Chat", Icon: ChatBubbleLeftRightIcon, route: "/Chat" },
   { text: "Perfil", Icon: UserIcon, route: "/Perfil" },
+  { text: "Contacto", Icon: Mail, route: "/contacto" },
 ];
 
 const SideBar = ({ open, onClose }) => {
@@ -164,7 +163,24 @@ const SideBar = ({ open, onClose }) => {
                   </span>
                 </button>
               </li>
-            )
+            ),
+          )}
+          {user?.isAdmin && (
+            <li>
+              <button
+                className="group flex items-center space-x-4 py-4 px-4 w-full text-left hover:bg-[#401809] focus:outline-none focus:ring-2 focus:ring-[#FFE0C4]"
+                onClick={() => {
+                  navigate("/panel-admin");
+                  onClose(); // cerrá el menú al hacer click
+                }}
+                aria-label={`Ir al panel de administrador`}
+              >
+                <LayoutDashboard className="h-6 w-6 text-white group-hover:text-[#FFE0C4]" />
+                <span className="text-white group-hover:text-[#FFE0C4] font-poppins text-lg">
+                  Admin
+                </span>
+              </button>
+            </li>
           )}
         </ul>
 
