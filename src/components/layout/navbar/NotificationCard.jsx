@@ -18,6 +18,9 @@ const NotificationCard = ({
       case "compraExitosa":
         navigate(`/MisPedidos`);
         break;
+      case "ventaExitosa":
+        navigate(`/vender`, { state: { targetId: "sails" } });
+        break;
     }
   };
 
