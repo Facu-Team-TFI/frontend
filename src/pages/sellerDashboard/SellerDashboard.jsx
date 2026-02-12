@@ -42,12 +42,34 @@ const SellerDashboard = ({ onRefresh }) => {
     fetchPublications();
   }, [user?.seller?.id]);
 
-  const dashboardData = {
-    totalSales: 150,
-    pendingOrders: 10,
-    newMessages: 5,
-    activePosts: 25,
-  };
+  const [DashboardData, setDashboardData] = useState(null);
+
+useEffect(() => {
+    const fetchDashboardData = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/seller/dashboard/${user.seller.id}`);
+
+            if (!response.ok) {
+                throw new Error("Error al cargar dashboard data");
+            }
+
+            const data = await response.json();
+            setDashboardData(data);
+
+        } catch (error) {
+            console.error("Error al obtener dashboard data", error);
+        } 
+    };
+
+    fetchDashboardData();
+
+}, []);
+
+    const dashboardData = {
+        totalSales: 150,
+        newMessages: 5,
+    };
+
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },
@@ -105,7 +127,7 @@ const SellerDashboard = ({ onRefresh }) => {
                     Ventas Totales
                   </h2>
                   <p className="text-4xl text-[#401809] mt-2 hover:text-[#FFE0C4] transition-colors duration-300">
-                    {dashboardData.totalSales}
+                    {DashboardData?.totalSales}
                   </p>
                 </div>
               </div>
@@ -126,7 +148,7 @@ const SellerDashboard = ({ onRefresh }) => {
                     Pedidos Pendientes
                   </h2>
                   <p className="text-4xl text-[#401809] mt-2 hover:text-[#FFE0C4] transition-colors duration-300">
-                    {dashboardData.pendingOrders}
+                    {DashboardData?.pendingOrders}
                   </p>
                 </div>
               </div>
@@ -168,7 +190,7 @@ const SellerDashboard = ({ onRefresh }) => {
                     Publicaciones Activas
                   </h2>
                   <p className="text-4xl text-[#401809] mt-2 hover:text-[#FFE0C4] transition-colors duration-300">
-                    {dashboardData.activePosts}
+                    {DashboardData?.activePosts}
                   </p>
                 </div>
               </div>

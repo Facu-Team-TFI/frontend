@@ -249,26 +249,35 @@ const AdminDashboard = ({ onRefresh }) => {
   };
 
   return (
-    <>
-      <h2 className="text-4xl font-bold mt-10">Panel de Administración</h2>
-      <div className="p-6 relative flex flex-col lg:flex-row gap-6 w-full">
-        <div className="flex-1 pl-[100px]">
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-2">Usuarios</h3>
-            <ul className="space-y-2">
+  <>
+    <div className="px-4 sm:px-8 py-6 max-w-7xl mx-auto">
+      
+      <h2 className="text-3xl sm:text-4xl font-bold mb-8 text-center lg:text-left">
+        Panel de Administración
+      </h2>
+
+      <div className="flex flex-col lg:flex-row gap-8">
+
+        {/* LEFT SIDE */}
+        <div className="flex-1 space-y-10">
+
+          {/* USERS */}
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">Usuarios</h3>
+
+            <ul className="space-y-3">
               {users.map((user) => (
                 <li
                   key={user.ID_Buyers}
-                  className=" bg-[#C5CEBB] shadow p-4 rounded flex justify-between items-center"
+                  className="bg-[#C5CEBB] shadow-md p-4 rounded-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3"
                 >
-                  <div>
-                    <p>
-                      {user.BuyersName} {user.BuyersLastName} - {user.Email}
-                    </p>
-                  </div>
+                  <p className="text-sm sm:text-base">
+                    {user.BuyersName} {user.BuyersLastName} - {user.Email}
+                  </p>
+
                   <button
                     onClick={() => openConfirm("user", user.ID_Buyers)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full sm:w-auto"
                   >
                     Eliminar
                   </button>
@@ -277,31 +286,33 @@ const AdminDashboard = ({ onRefresh }) => {
             </ul>
           </section>
 
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-2">Publicaciones</h3>
-            <ul className="space-y-2">
+          {/* PUBLICATIONS */}
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">Publicaciones</h3>
+
+            <ul className="space-y-3">
               {publications.map((pub) => (
                 <li
                   key={pub.ID_Publication}
-                  className="bg-[#C5CEBB] shadow p-4 rounded flex justify-between items-center"
+                  className="bg-[#C5CEBB] shadow-md p-4 rounded-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3"
                 >
-                  <div>
-                    <p>
-                      {pub.Title} - ${pub.Price}
-                    </p>
-                  </div>
-                  <div className="flex gap-2">
+                  <p className="text-sm sm:text-base">
+                    {pub.Title} - ${pub.Price}
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                     <button
                       onClick={() => openEditor(pub)}
-                      className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full sm:w-auto"
                     >
                       Editar
                     </button>
+
                     <button
                       onClick={() =>
                         openConfirm("publication", pub.ID_Publication)
                       }
-                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full sm:w-auto"
                     >
                       Eliminar
                     </button>
@@ -309,11 +320,13 @@ const AdminDashboard = ({ onRefresh }) => {
                 </li>
               ))}
             </ul>
-            <div className="flex justify-center items-center gap-4 mt-4">
+
+            {/* PAGINATION */}
+            <div className="flex flex-wrap justify-center items-center gap-4 mt-6 text-sm sm:text-base">
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage((prev) => prev - 1)}
-                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+                className="px-4 py-2 rounded bg-gray-300 disabled:opacity-50 hover:bg-gray-400"
               >
                 Anterior
               </button>
@@ -325,29 +338,30 @@ const AdminDashboard = ({ onRefresh }) => {
               <button
                 disabled={currentPage === totalPages}
                 onClick={() => setCurrentPage((prev) => prev + 1)}
-                className="px-3 py-1 rounded bg-gray-300 disabled:opacity-50"
+                className="px-4 py-2 rounded bg-gray-300 disabled:opacity-50 hover:bg-gray-400"
               >
                 Siguiente
               </button>
             </div>
           </section>
 
-          <section className="mb-8">
-            <h3 className="text-2xl font-semibold mb-2">Vendedores</h3>
-            <ul className="space-y-2">
-              {sellers.map((user) => (
+          {/* SELLERS */}
+          <section>
+            <h3 className="text-2xl font-semibold mb-4">Vendedores</h3>
+
+            <ul className="space-y-3">
+              {sellers.map((seller) => (
                 <li
-                  key={user.ID_Buyers}
-                  className="bg-[#C5CEBB] shadow p-4 rounded flex justify-between items-center"
+                  key={seller.ID_Buyers}
+                  className="bg-[#C5CEBB] shadow-md p-4 rounded-lg flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3"
                 >
-                  <div>
-                    <p>
-                      {user.BuyersName} {user.BuyersLastName} - {user.Email}
-                    </p>
-                  </div>
+                  <p className="text-sm sm:text-base">
+                    {seller.BuyersName} {seller.BuyersLastName} - {seller.Email}
+                  </p>
+
                   <button
-                    onClick={() => openConfirm("seller", user.ID_Buyers)}
-                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                    onClick={() => openConfirm("seller", seller.ID_Buyers)}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 w-full sm:w-auto"
                   >
                     Eliminar
                   </button>
@@ -355,117 +369,21 @@ const AdminDashboard = ({ onRefresh }) => {
               ))}
             </ul>
           </section>
+
         </div>
 
-        <div className="w-full lg:w-1/2 lg:sticky lg:top-6 lg:self-start">
-          <Register onRegisterSuccess={fetchUsers} />
+        {/* RIGHT SIDE - REGISTER */}
+        <div className="w-full lg:w-2/4">
+          <div className="bg-[#F5F5F5] shadow-xl rounded-2xl p-8 w-full min-w-[320px]">
+            <Register onRegisterSuccess={fetchUsers} />
+          </div>
         </div>
-        {editingPost && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-[#FDE7B9] rounded-xl p-8 shadow-2xl w-[90%] max-w-lg relative"
-            >
-              <button
-                onClick={closeEditor}
-                className="absolute top-4 right-4 text-[#401809] text-xl font-bold"
-              >
-                ×
-              </button>
-              <h3 className="text-2xl font-bold text-[#401809] mb-6 text-center font-poppins">
-                Editar Publicación
-              </h3>
-              <div className="flex flex-col gap-3">
-                <input
-                  name="Title"
-                  value={formData.Title || ""}
-                  onChange={handleChange}
-                  placeholder="Título"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <input
-                  name="Brand"
-                  value={formData.Brand || ""}
-                  onChange={handleChange}
-                  placeholder="Marca"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <input
-                  name="Price"
-                  value={formData.Price || ""}
-                  onChange={handleChange}
-                  placeholder="Precio"
-                  type="number"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <input
-                  name="ImageUrl"
-                  value={formData.ImageUrl || ""}
-                  onChange={handleChange}
-                  placeholder="URL de imagen"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <textarea
-                  name="DescriptionProduct"
-                  value={formData.DescriptionProduct || ""}
-                  onChange={handleChange}
-                  placeholder="Descripción"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <input
-                  name="Sku"
-                  value={formData.Sku || ""}
-                  onChange={handleChange}
-                  placeholder="SKU"
-                  className="p-2 rounded border border-[#401809]"
-                />
-                <select
-                  name="State"
-                  value={formData.State || ""}
-                  onChange={handleChange}
-                  className="p-2 rounded border border-[#401809]"
-                >
-                  <option value="nuevo">Nuevo</option>
-                  <option value="usado">Usado</option>
-                  <option value="Poco usado">Poco usado</option>
-                  <option value="Reparado">Reparado</option>
-                </select>
-                <button
-                  onClick={handleSave}
-                  className="mt-4 bg-[#401809] text-[#FDE7B9] px-4 py-2 rounded hover:bg-[#2e1005] transition"
-                >
-                  Guardar cambios
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
 
-        {confirmData.show && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-80 max-w-full shadow-lg">
-              <p className="mb-4">{confirmData.message}</p>
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={closeConfirm}
-                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                >
-                  Cancelar
-                </button>
-                <button
-                  onClick={confirmAction}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                >
-                  Confirmar
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
-    </>
-  );
+    </div>
+  </>
+);
+
 };
 
 export default AdminDashboard;
