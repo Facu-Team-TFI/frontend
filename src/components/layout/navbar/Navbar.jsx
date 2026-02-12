@@ -14,7 +14,8 @@ import NotificationCard from "./NotificationCard";
 export default function Navbar({ publications }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
-  const { searchTitle, setSearchTitle } = useSearch();
+  const { searchTitle, setSearchTitle, searchOpen, setSearchOpen } =
+    useSearch();
   const [searchButton, setSearchButton] = useState(false);
   const { notifications, removeNotification } =
     useContext(NotificationsContext);
@@ -145,13 +146,14 @@ export default function Navbar({ publications }) {
           <button
             onClick={() => {
               setSearchButton(!searchButton);
+              setSearchOpen(!searchOpen);
             }}
           >
             <Search className="text-gray-400 w-4 h-4" />
           </button>
         </div>
       </nav>
-      {searchButton && (
+      {searchOpen && (
         <input
           type="text"
           value={searchTitle}

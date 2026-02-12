@@ -11,7 +11,7 @@ const PublicationList = ({ publications }) => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedState, setSelectedState] = useState("");
-  const { searchTitle } = useSearch();
+  const { searchTitle, searchOpen } = useSearch();
 
   const [searchParams] = useSearchParams();
   const categoryParam = searchParams.get("category"); // <- nombre correcto
@@ -89,9 +89,9 @@ const PublicationList = ({ publications }) => {
         }}
         href="#filters"
         title="Ir a filtros"
-        className="
+        className={`
     sticky
-    top-24 mx-auto
+    ${searchOpen ? "top-40" : "top-24"} mx-auto
     text-black/80
     md:hidden 
     z-40
@@ -100,7 +100,7 @@ const PublicationList = ({ publications }) => {
     transition-all duration-200
     brightness-130
     active:scale-95
-  "
+  `}
       >
         <IoArrowUpCircle size={50} />
       </button>
