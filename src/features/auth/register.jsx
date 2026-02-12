@@ -15,14 +15,16 @@ const Register = ({ onRegisterSuccess }) => {
     provinces,
     cities,
     selectedProvince,
-    setSelectedProvince
+    setSelectedProvince,
   } = RegisterValidations(onRegisterSuccess);
 
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="min-h-screen flex">
-      <div className="w-full max-w-md mx-auto px-8 py-12 lg:w-1/2 flex flex-col justify-center">
+    <div className={`min-h-screen flex ${isAuthenticated ? "" : ""}`}>
+      <div
+        className={`w-full max-w-md mx-auto py-12 lg:w-1/2 flex flex-col justify-center ${isAuthenticated ? "pt-0" : "px-8"}`}
+      >
         {!isAuthenticated && (
           <>
             <div className="flex justify-center mb-6">
@@ -48,8 +50,8 @@ const Register = ({ onRegisterSuccess }) => {
         )}
 
         {isAuthenticated && (
-          <h2 className="text-2xl w-[200px] font-bold text-center text-[#222] mb-2">
-            Crea un Usuario
+          <h2 className="self-center text-2xl font-bold text-center text-[#222] mb-4">
+            Crear Administrador
           </h2>
         )}
 
@@ -67,7 +69,7 @@ const Register = ({ onRegisterSuccess }) => {
             </label>
             <input
               type="text"
-              name='BuyersName'
+              name="BuyersName"
               value={formData.BuyersName}
               onChange={handleChange}
               onBlur={validateBlur}
@@ -83,14 +85,16 @@ const Register = ({ onRegisterSuccess }) => {
             </label>
             <input
               type="text"
-              name='BuyersLastName'
+              name="BuyersLastName"
               value={formData.BuyersLastName}
               onChange={handleChange}
               onBlur={validateBlur}
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#40250D] focus:border-[#40250D]"
             />
             {errors.BuyersLastName && (
-              <p className="text-red-500 text-sm mt-1">{errors.BuyersLastName}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.BuyersLastName}
+              </p>
             )}
           </div>
           <div>
@@ -159,31 +163,40 @@ const Register = ({ onRegisterSuccess }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Provincia</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Provincia
+            </label>
             <select
               name="ID_Province"
               value={selectedProvince}
               onChange={(e) => {
                 setSelectedProvince(e.target.value);
-                handleChange({ target: { name: 'ID_City', value: '' } });
+                handleChange({ target: { name: "ID_City", value: "" } });
               }}
               onBlur={validateBlur}
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">Selecciona una provincia</option>
               {provinces.map((provincia) => (
-                <option key={provincia.ID_Province} value={provincia.ID_Province}>
+                <option
+                  key={provincia.ID_Province}
+                  value={provincia.ID_Province}
+                >
                   {provincia.Name}
                 </option>
               ))}
             </select>
             {errors.selectedProvince && (
-              <p className="text-red-500 text-sm mt-1">{errors.selectedProvince}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.selectedProvince}
+              </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Ciudad</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Ciudad
+            </label>
             <select
               name="ID_City"
               value={formData.ID_City}
@@ -232,12 +245,16 @@ const Register = ({ onRegisterSuccess }) => {
               className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[#40250D] focus:border-[#40250D]"
             />
             {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.confirmPassword}
+              </p>
             )}
           </div>
           <div className="flex items-center my-6">
             <hr className="flex-grow border-gray-300" />
-            <span className="px-4 text-gray-400 text-sm">El primer paso hacia tu próximo instrumento</span>
+            <span className="px-4 text-gray-400 text-sm">
+              El primer paso hacia tu próximo instrumento
+            </span>
             <hr className="flex-grow border-gray-300" />
           </div>
           <button
