@@ -159,7 +159,7 @@ export default function Navbar({ publications }) {
           value={searchTitle}
           onChange={handleSearchChange}
           placeholder="Buscar..."
-          className="min-[650px]:hidden fixed top-[64px] z-40 w-screen bg-[#60250D] text-white pl-10 pr-4 py-4 mt-3 text-sm placeholder-gray-400 focus:outline-none"
+          className="min-[650px]:hidden fixed top-[64px] z-50 w-screen bg-[#60250D] text-white pl-10 pr-4 py-4 mt-3 text-sm placeholder-gray-400 focus:outline-none"
         />
       )}
 
