@@ -6,6 +6,7 @@ import {
   notifyMissingFields,
   notifySuccessAdd,
 } from "../../pages/notification/notification";
+import { API_BASE } from "@/lib/config";
 
 function RegisterValidations(onRegisterSuccess) {
   const { token: tokenPrueba } = useAuth() || {};
@@ -44,7 +45,7 @@ function RegisterValidations(onRegisterSuccess) {
   useEffect(() => {
     const fetchProvinces = async () => {
       try {
-        const res = await fetch("http://localhost:3000/provincias-ciudades");
+        const res = await fetch(`${API_BASE}/provincias-ciudades`);
         const data = await res.json();
         setProvinces(data);
       } catch (err) {
@@ -59,9 +60,7 @@ function RegisterValidations(onRegisterSuccess) {
     const fetchCities = async () => {
       if (!selectedProvince) return;
       try {
-        const res = await fetch(
-          `http://localhost:3000/ciudades/${selectedProvince}`
-        );
+        const res = await fetch(`${API_BASE}/ciudades/${selectedProvince}`);
         const data = await res.json();
         setCities(data);
       } catch (err) {

@@ -10,6 +10,7 @@ import { useSearch } from "../../../services/auth/SearchContext";
 import { useContext } from "react";
 import { NotificationsContext } from "../../../services/notifications/notifications.context";
 import NotificationCard from "./NotificationCard";
+import { API_BASE } from "@/lib/config";
 
 export default function Navbar({ publications }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -121,7 +122,7 @@ export default function Navbar({ publications }) {
                 user?.avatarUrl
                   ? user.avatarUrl.startsWith("http")
                     ? user.avatarUrl
-                    : `http://localhost:3000/${user.avatarUrl}`
+                    : `${API_BASE}/${user.avatarUrl}`
                   : avatarDefault
               }
               alt="Avatar"

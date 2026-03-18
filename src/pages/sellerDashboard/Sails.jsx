@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../services/auth/AuthContext";
 import { motion } from "framer-motion";
+import { API_BASE } from "@/lib/config";
 
 const Sails = () => {
   const [sails, setSails] = useState([]);
@@ -11,15 +12,12 @@ const Sails = () => {
       if (!user?.seller?.id) return;
 
       try {
-        const res = await fetch(
-          `http://localhost:3000/sellers/${user.seller.id}/sails`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
+        const res = await fetch(`${API_BASE}/sellers/${user.seller.id}/sails`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
           },
-        );
+        });
         if (!res.ok) {
           const errorData = await res.json();
           throw new Error(

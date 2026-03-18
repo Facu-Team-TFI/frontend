@@ -10,6 +10,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import avatarDefault from "../../../assets/avatarDefault.jpeg";
 import { getSellerByPublicationId } from "../../../services/api";
+import { API_BASE } from "@/lib/config.js";
 
 const DetailPublication = () => {
   const [seller, setSeller] = useState(null);
@@ -139,7 +140,7 @@ const DetailPublication = () => {
                   seller.Buyer?.avatarUrl
                     ? seller.Buyer.avatarUrl.startsWith("http")
                       ? seller.Buyer.avatarUrl
-                      : `http://localhost:3000/${seller.Buyer.avatarUrl}`
+                      : `${API_BASE}/${seller.Buyer.avatarUrl}`
                     : avatarDefault
                 }
                 alt="avatarSeller"

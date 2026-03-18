@@ -10,6 +10,7 @@ import {
   notifySuccessAdd,
 } from "../../../pages/notification/notification";
 import PublicationCard from "../../../features/publications/publicationCard/PublicationCard";
+import { API_BASE } from "@/lib/config";
 
 const Profile = () => {
   const [sellerData, setSellerData] = useState(null);
@@ -32,7 +33,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       if (id) {
         try {
-          const res = await fetch(`http://localhost:3000/buyers/${id}`);
+          const res = await fetch(`${API_BASE}/buyers/${id}`);
           const data = await res.json();
 
           setSellerData({
@@ -55,7 +56,7 @@ const Profile = () => {
           });
           if (data.Seller?.ID_Sellers) {
             const pubRes = await fetch(
-              `http://localhost:3000/seller/${data.Seller.ID_Sellers}`
+              `${API_BASE}/seller/${data.Seller.ID_Sellers}`,
             );
             const pubData = await pubRes.json();
             setPosts(pubData);
@@ -83,9 +84,7 @@ const Profile = () => {
 
         if (user.seller?.id) {
           try {
-            const pubRes = await fetch(
-              `http://localhost:3000/seller/${user.seller.id}`
-            );
+            const pubRes = await fetch(`${API_BASE}/seller/${user.seller.id}`);
             const pubData = await pubRes.json();
             setPosts(pubData);
           } catch (err) {
@@ -142,7 +141,7 @@ const Profile = () => {
       formData.append("Email", sellerData.email);
       formData.append("Phone", sellerData.phone);
 
-      const res = await fetch(`http://localhost:3000/buyers/${user.id}`, {
+      const res = await fetch(`${API_BASE}/buyers/${user.id}`, {
         method: "PUT",
         body: formData,
       });
@@ -216,7 +215,7 @@ const Profile = () => {
       if (sellerData.profileImage.startsWith("http")) {
         return sellerData.profileImage; // ✅ URL de Cloudinary
       }
-      // return `http://localhost:3000${sellerData.profileImage}`;
+      // return `${API_BASE}${sellerData.profileImage}`;
     }
 
     return avatarDefault;

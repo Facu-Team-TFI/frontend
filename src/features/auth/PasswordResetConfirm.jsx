@@ -10,6 +10,7 @@ import {
 } from "../../pages/notification/notification";
 
 import fondo from "../../assets/fondo.png";
+import { API_BASE } from "@/lib/config";
 
 const PasswordResetConfirm = () => {
   const [formData, setFormData] = useState({
@@ -56,19 +57,19 @@ const PasswordResetConfirm = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/auth/reset-password?token=${token}`,
+        `${API_BASE}/auth/reset-password?token=${token}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        }
+        },
       );
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(
-          errorData.message || "Error desconocido al restablecer contraseña"
+          errorData.message || "Error desconocido al restablecer contraseña",
         );
       }
 

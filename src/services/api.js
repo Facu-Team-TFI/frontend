@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:3000";
+import { API_BASE } from "@/lib/config";
 
 export const getPublications = async () => {
-  const res = await fetch(`${API_URL}/publications`, {
+  const res = await fetch(`${API_BASE}/publications`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -12,25 +12,25 @@ export const getPublications = async () => {
 };
 
 export const getLatestPublications = async () => {
-  const res = await fetch(`${API_URL}/publications/latest`);
+  const res = await fetch(`${API_BASE}/publications/latest`);
   if (!res.ok) throw new Error("Error al obtener las ultimas publicaciones");
   return await res.json();
 };
 
 export const getPublicationById = async (id) => {
-  const res = await fetch(`${API_URL}/publications/${id}`);
+  const res = await fetch(`${API_BASE}/publications/${id}`);
   if (!res.ok) throw new Error("Publicación no encontrada");
   return await res.json();
 };
 
 export const getSellerByPublicationId = async (id) => {
-  const res = await fetch(`${API_URL}/publications/${id}/seller`);
+  const res = await fetch(`${API_BASE}/publications/${id}/seller`);
   if (!res.ok) throw new Error("Error al obtener el vendedor");
   return await res.json();
 };
 
 export const createPublication = async (data) => {
-  const res = await fetch(`${API_URL}/publications`, {
+  const res = await fetch(`${API_BASE}/publications`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export const createBuyer = async (data, token = null) => {
   const headers = { "Content-Type": "application/json" };
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(`${API_URL}/buyers`, {
+  const res = await fetch(`${API_BASE}/buyers`, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(data),
@@ -62,7 +62,7 @@ export const createBuyer = async (data, token = null) => {
 };
 
 export const updatePublication = async (id, data) => {
-  const res = await fetch(`${API_URL}/publications/${id}`, {
+  const res = await fetch(`${API_BASE}/publications/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const updatePublication = async (id, data) => {
 };
 
 export const deletePublication = async (id) => {
-  const res = await fetch(`${API_URL}/publications/${id}`, {
+  const res = await fetch(`${API_BASE}/publications/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Error al eliminar publicación");
@@ -82,7 +82,7 @@ export const deletePublication = async (id) => {
 };
 
 export const getAllNotifications = async (userId) => {
-  const res = await fetch(`${API_URL}/${userId}/notifications`, {
+  const res = await fetch(`${API_BASE}/${userId}/notifications`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export const getAllNotifications = async (userId) => {
 };
 
 export const deleteNotification = async (id) => {
-  const res = await fetch(`${API_URL}/notifications/${id}`, {
+  const res = await fetch(`${API_BASE}/notifications/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

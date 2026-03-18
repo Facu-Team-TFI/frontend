@@ -6,6 +6,7 @@ import {
 import { useAuth } from "../../services/auth/AuthContext";
 import { useNavigate } from "react-router";
 import { ArrowLeft } from "lucide-react";
+import { API_BASE } from "@/lib/config";
 
 const initialState = {
   name: "",
@@ -39,8 +40,8 @@ const PublicationFormSeller = ({ onRefresh }) => {
     const fetchInitialData = async () => {
       try {
         const [provinciasRes, categoriasRes] = await Promise.all([
-          fetch("http://localhost:3000/provincias-ciudades"),
-          fetch("http://localhost:3000/categorias"),
+          fetch(`${API_BASE}/provincias-ciudades`),
+          fetch(`${API_BASE}/categorias`),
         ]);
         const provincias = await provinciasRes.json();
         const categorias = await categoriasRes.json();
@@ -98,7 +99,7 @@ const PublicationFormSeller = ({ onRefresh }) => {
         data.append("image", formData.image);
       }
 
-      const response = await fetch("http://localhost:3000/publications", {
+      const response = await fetch(`${API_BASE}/publications`, {
         method: "POST",
         body: data, // ⚠️ sin headers manuales
       });
@@ -150,9 +151,7 @@ const PublicationFormSeller = ({ onRefresh }) => {
     setFormData({ ...formData, provinceId: selectedProvinceId, cityId: "" });
 
     try {
-      const res = await fetch(
-        `http://localhost:3000/ciudades/${selectedProvinceId}`,
-      );
+      const res = await fetch(`${API_BASE}/ciudades/${selectedProvinceId}`);
       const data = await res.json();
       setCities(data);
     } catch (err) {
@@ -170,7 +169,7 @@ const PublicationFormSeller = ({ onRefresh }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/${selectedCategoryId}/subcategorias`,
+        `${API_BASE}/${selectedCategoryId}/subcategorias`,
       );
       const data = await res.json();
       setSubCategories(data);

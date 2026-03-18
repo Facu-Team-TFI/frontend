@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../services/auth/AuthContext";
+import { API_BASE } from "@/lib/config";
 
 const SellerDashboard = ({ onRefresh }) => {
   const [posts, setPosts] = useState([]);
@@ -27,9 +28,7 @@ const SellerDashboard = ({ onRefresh }) => {
       if (!user?.seller?.id) return;
 
       try {
-        const response = await fetch(
-          `http://localhost:3000/seller/${user.seller.id}`,
-        );
+        const response = await fetch(`${API_BASE}/seller/${user.seller.id}`);
         if (!response.ok) throw new Error("Error al cargar publicaciones");
 
         const data = await response.json();
@@ -44,32 +43,31 @@ const SellerDashboard = ({ onRefresh }) => {
 
   const [DashboardData, setDashboardData] = useState(null);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchDashboardData = async () => {
-        try {
-            const response = await fetch(`http://localhost:3000/seller/dashboard/${user.seller.id}`);
+      try {
+        const response = await fetch(
+          `${API_BASE}/seller/dashboard/${user.seller.id}`,
+        );
 
-            if (!response.ok) {
-                throw new Error("Error al cargar dashboard data");
-            }
+        if (!response.ok) {
+          throw new Error("Error al cargar dashboard data");
+        }
 
-            const data = await response.json();
-            setDashboardData(data);
-
-        } catch (error) {
-            console.error("Error al obtener dashboard data", error);
-        } 
+        const data = await response.json();
+        setDashboardData(data);
+      } catch (error) {
+        console.error("Error al obtener dashboard data", error);
+      }
     };
 
     fetchDashboardData();
+  }, []);
 
-}, []);
-
-    const dashboardData = {
-        totalSales: 150,
-        newMessages: 5,
-    };
-
+  const dashboardData = {
+    totalSales: 150,
+    newMessages: 5,
+  };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 50 },

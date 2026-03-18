@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { notifySuccessAdd } from "../../../pages/notification/notification";
 import { toast } from "react-toastify";
+import { API_BASE } from "@/lib/config";
 
 const MyPosts = ({ posts, setPosts, onRefresh }) => {
   const [editingPost, setEditingPost] = useState(null);
@@ -112,7 +113,7 @@ const MyPosts = ({ posts, setPosts, onRefresh }) => {
         fd.append("ImageUrl", ui.ImageUrl);
       }
 
-      const res = await fetch(`http://localhost:3000/publications/${id}`, {
+      const res = await fetch(`${API_BASE}/publications/${id}`, {
         method: "PUT",
         body: fd,
       });
@@ -183,7 +184,7 @@ const MyPosts = ({ posts, setPosts, onRefresh }) => {
 
   const deletePublication = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/publications/${id}`, {
+      const res = await fetch(`${API_BASE}/publications/${id}`, {
         method: "DELETE",
       });
 

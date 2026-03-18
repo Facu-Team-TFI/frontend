@@ -4,8 +4,11 @@ import fondo3 from "../../assets/fondo3.png";
 import { useAuth } from "../../services/auth/AuthContext";
 import { useLocation, useNavigate } from "react-router";
 import { io } from "socket.io-client";
+import { API_BASE, WS_BASE } from "@/lib/config";
 
-const socket = io("http://localhost:3000");
+const socket = io(WS_BASE, {
+  transports: ["websocket"],
+});
 
 const ChatComponent = () => {
   const [activeChat, setActiveChat] = useState("");
@@ -58,7 +61,7 @@ const ChatComponent = () => {
   useEffect(() => {
     const initChat = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/chat/${user.id}`);
+        const res = await fetch(`${API_BASE}/chat/${user.id}`);
         const chats = await res.json();
 
         setChatlist(chats);
@@ -66,21 +69,19 @@ const ChatComponent = () => {
         const existingChat = chats.find(
           (chat) =>
             (chat.ID_User === userID && chat.ID_Buyers === sellerID) ||
-            (chat.ID_User === sellerID && chat.ID_Buyers === userID)
+            (chat.ID_User === sellerID && chat.ID_Buyers === userID),
         );
 
         if (!existingChat && userID && sellerID) {
           const createdChat = await fetchCreateChat();
 
-          const updatedRes = await fetch(
-            `http://localhost:3000/chat/${user.id}`
-          );
+          const updatedRes = await fetch(`${API_BASE}/chat/${user.id}`);
           const updatedChats = await updatedRes.json();
 
           setChatlist(updatedChats);
 
           const newChat = updatedChats.find(
-            (chat) => chat.ID_Chat === createdChat.ID_Chat
+            (chat) => chat.ID_Chat === createdChat.ID_Chat,
           );
           setActiveChat(newChat?.ID_Chat || createdChat.ID_Chat);
         } else if (existingChat) {
@@ -100,7 +101,7 @@ const ChatComponent = () => {
     const fetchMessages = async () => {
       if (!activeChat) return;
       try {
-        const res = await fetch(`http://localhost:3000/message/${activeChat}`);
+        const res = await fetch(`${API_BASE}/message/${activeChat}`);
         const msgs = await res.json();
         setConversations((prev) => ({ ...prev, [activeChat]: msgs }));
       } catch (err) {
@@ -124,7 +125,7 @@ const ChatComponent = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/messages", {
+      const res = await fetch(`${API_BASE}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newMessage),
@@ -148,7 +149,7 @@ const ChatComponent = () => {
   };
 
   const fetchCreateChat = async () => {
-    const res = await fetch("http://localhost:3000/chat", {
+    const res = await fetch(`${API_BASE}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -229,7 +230,7 @@ const ChatComponent = () => {
                           otherUser.avatarUrl
                             ? otherUser.avatarUrl.startsWith("http")
                               ? otherUser.avatarUrl
-                              : `http://localhost:3000/${otherUser.avatarUrl}`
+                              : `${API_BASE}/${otherUser.avatarUrl}`
                             : avatarDefault
                         }
                         alt="avatar"
@@ -279,7 +280,7 @@ const ChatComponent = () => {
                         otherUser.avatarUrl
                           ? otherUser.avatarUrl.startsWith("http")
                             ? otherUser.avatarUrl
-                            : `http://localhost:3000/${otherUser.avatarUrl}`
+                            : `${API_BASE}/${otherUser.avatarUrl}`
                           : avatarDefault
                       }
                       alt="avatar"

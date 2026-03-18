@@ -4,8 +4,7 @@ import { notifyMissingFields } from "../../pages/notification/notification";
 import { useAuth } from "../auth/AuthContext";
 import { NotificationsContext } from "./notifications.context";
 import { io } from "socket.io-client";
-
-const SOCKET_URL = "http://localhost:3000";
+import { WS_BASE } from "@/lib/config";
 
 export const NotificationsContextProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
@@ -34,7 +33,8 @@ export const NotificationsContextProvider = ({ children }) => {
   //Sockets: notificaciones en tiempo real
   useEffect(() => {
     if (!userId) return;
-    const socket = io(SOCKET_URL, { transports: ["websocket"] });
+
+    const socket = io(WS_BASE, { transports: ["websocket"] });
 
     socket.emit("client:join_notifications", userId);
 
@@ -42,7 +42,8 @@ export const NotificationsContextProvider = ({ children }) => {
       setNotifications((prev) => [notification, ...prev]);
     });
 
-    return () => { //el return en un componente solo se ejecuta cuando se desmonta el componente o cambia el userId
+    return () => {
+      //el return en un componente solo se ejecuta cuando se desmonta el componente o cambia el userId
       socket.off("server:new-notification");
       socket.disconnect();
     };

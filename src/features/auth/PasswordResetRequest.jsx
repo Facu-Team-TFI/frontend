@@ -8,6 +8,7 @@ import {
 } from "../../pages/notification/notification";
 
 import fondo from "../../assets/fondo.png";
+import { API_BASE } from "@/lib/config";
 
 const PasswordResetRequest = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ const PasswordResetRequest = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/auth/forgot-password`, {
+      const res = await fetch(`${API_BASE}/auth/forgot-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +48,7 @@ const PasswordResetRequest = () => {
         const errorData = await res.json();
         throw new Error(
           errorData.message ||
-            "Error desconocido al solicitar recuperación de contraseña"
+            "Error desconocido al solicitar recuperación de contraseña",
         );
       }
 

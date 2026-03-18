@@ -6,9 +6,10 @@ import {
   notifyMissingFields,
   notifySuccessAdd,
 } from "../notification/notification";
+import { API_BASE } from "@/lib/config";
 
 async function updatePublication(id, data) {
-  const res = await fetch(`http://localhost:3000/publications/${id}`, {
+  const res = await fetch(`${API_BASE}/publications/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -47,7 +48,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:3000/admin/usuarios", {
+      const res = await fetch(`${API_BASE}/admin/usuarios`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -61,7 +62,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   /*const fetchPublications = async () => {
     try {
-      const res = await fetch("http://localhost:3000/admin/publicaciones", {
+      const res = await fetch(`${API_BASE}/admin/publicaciones`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +77,7 @@ const AdminDashboard = ({ onRefresh }) => {
   const fetchPublications = async () => {
     try {
       const res = await fetch(
-        `http://localhost:3000/admin/publicaciones?page=${currentPage}&limit=${limit}`,
+        `${API_BASE}/admin/publicaciones?page=${currentPage}&limit=${limit}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,7 +97,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const fetchSellers = async () => {
     try {
-      const res = await fetch("http://localhost:3000/admin/sellers", {
+      const res = await fetch(`${API_BASE}/admin/sellers`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -110,7 +111,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const deleteUser = async (id) => {
     try {
-      await fetch(`http://localhost:3000/admin/usuarios/${id}`, {
+      await fetch(`${API_BASE}/admin/usuarios/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -134,7 +135,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const deletePublication = async (id) => {
     try {
-      await fetch(`http://localhost:3000/admin/publicaciones/${id}`, {
+      await fetch(`${API_BASE}/admin/publicaciones/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -159,7 +160,7 @@ const AdminDashboard = ({ onRefresh }) => {
 
   const deleteSellers = async (id) => {
     try {
-      await fetch(`http://localhost:3000/admin/seller/${id}`, {
+      await fetch(`${API_BASE}/admin/seller/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

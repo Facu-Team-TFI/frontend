@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../services/auth/AuthContext";
 import { motion } from "framer-motion";
+import { API_BASE } from "@/lib/config";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -11,7 +12,7 @@ const MyOrders = () => {
       if (!user?.id) return;
 
       try {
-        const res = await fetch(`http://localhost:3000/order/buyer/${user.id}`);
+        const res = await fetch(`${API_BASE}/order/buyer/${user.id}`);
         const data = await res.json();
         setOrders(data);
       } catch (error) {
