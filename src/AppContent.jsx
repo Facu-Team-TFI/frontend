@@ -18,7 +18,7 @@ import SobreNosotros from "./components/shared/pageFooter/sobreNosotros/sobreNos
 import FAQ from "./components/shared/pageFooter/FAQ/FAQ";
 import TermsAndConditions from "./components/shared/pageFooter/terminosPolitica/TerminosPolitica";
 import HelpResources from "./components/shared/pageFooter/recursosUtiles/RecursosUtiles";
-import Protected from "./components/shared/routes/protected/protected";
+import Protected from "./components/shared/routes/protected/Protected";
 import Profile from "./components/shared/perfil/Profile";
 import HeroSection from "./components/layout/Slider/HeroSection";
 import PublicationFormSeller from "./features/sellerFeatures/PublicationFormSeller";
