@@ -25,9 +25,9 @@ CarpinChords requiere que los usuarios estén registrados para interactuar con e
 Se utilizan variables de entorno para definir las rutas de conexión con la API y los WebSockets según el entorno:
 
 ### Producción (`.env.production`)
-VITE_API_URL=https://carpinchords-backend.up.railway.app
-VITE_WS_URL=wss://carpinchords-backend.up.railway.app
+- VITE_API_URL=https://carpinchords-backend.up.railway.app
+- VITE_WS_URL=wss://carpinchords-backend.up.railway.app
 
 ### Desarrollo (`.env.development`)
-VITE_API_URL=http://localhost:3000
-VITE_WS_URL=ws://localhost:3000
+- VITE_API_URL=http://localhost:3000
+- VITE_WS_URL=ws://localhost:3000
