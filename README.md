@@ -3,7 +3,10 @@
 Interfaz de usuario para **CarpinChords**, marketplace integral de instrumentos y accesorios musicales. Este proyecto representa el **Trabajo Final Integrador (TFI)** para la Tecnicatura Universitaria en Programación de la **UTN FRRo**.
 
 ## 🚀 Despliegue y Enlaces
-- **Sitio en vivo:** [https://carpinchords.pages.dev](https://carpinchords.pages.dev)
+> **Nota de acceso:** Si encuentras una advertencia de seguridad en la raíz, puedes acceder directamente a la aplicación a través del enlace alternativo.
+
+- **Sitio en vivo (Principal):** [https://carpinchords.pages.dev](https://carpinchords.pages.dev)
+- **Acceso directo (Alternativo):** [https://carpinchords.pages.dev/home](https://carpinchords.pages.dev/home)
 - **API Backend:** [https://carpinchords-backend.up.railway.app](https://carpinchords-backend.up.railway.app)
 - **Repositorio Frontend:** [https://github.com/Facu-Team-TFI/frontend](https://github.com/Facu-Team-TFI/frontend)
 - **Repositorio Backend:** [https://github.com/Facu-Team-TFI/backend](https://github.com/Facu-Team-TFI/backend)
